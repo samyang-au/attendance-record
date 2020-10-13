@@ -202,6 +202,24 @@ async function createDatabase(user, password) {
                 OWNER to postgres;
         `)
 
+        console.log('create attendance table')
+        await dbClient.query(`
+            CREATE TABLE "${SCHEMA}"."attendance"
+            (
+                id smallint NOT NULL,
+                record_id smallint NOT NULL,
+                member_id smallint NOT NULL,
+                PRIMARY KEY (id),
+                CONSTRAINT record_id_constraint FOREIGN KEY (record_id)
+                    REFERENCES "${SCHEMA}".record (id) MATCH SIMPLE,
+                CONSTRAINT member_id_constraint FOREIGN KEY (member_id)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE
+            );
+
+            ALTER TABLE "${SCHEMA}"."attendance"
+                OWNER to postgres;
+        `)
+
         console.log('create offering table')
         await dbClient.query(`
             CREATE TABLE "${SCHEMA}"."offering"
