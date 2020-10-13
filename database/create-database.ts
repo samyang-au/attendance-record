@@ -97,7 +97,7 @@ async function createDatabase(user, password) {
             CREATE TABLE "${SCHEMA}"."member_type"
             (
                 id smallint NOT NULL,
-                name varchar(20),
+                name varchar(20) UNIQUE,
                 PRIMARY KEY (id)
             );
 
@@ -114,10 +114,10 @@ async function createDatabase(user, password) {
                 chinese_given_name varchar(20),
                 english_surname varchar(50),
                 chinese_surname varchar(10),
-                email varchar(50),
-                user_name varchar(50),
+                email TEXT UNIQUE,
+                user_name varchar(50) UNIQUE,
                 password varchar(30),
-                legacy_id varchar(20),
+                legacy_id varchar(20) UNIQUE,
                 gender character(1),
                 member_type_id smallint,
                 PRIMARY KEY (id),
