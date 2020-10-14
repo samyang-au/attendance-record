@@ -23,9 +23,12 @@ Locale: en_AU.ISO8859-15
 
 Launch stack builder is not required.
 
+## Install all node modules
+In a command prompt, change to the directory you copied the code to, run <cdoe>yarn install:all</code>
+
 ## Setup Database Table
 
-Run <Code>yarn createDatabase</code> to create the database. It will prompt you for the user name and password.
+In a command prompt, change to the directory you copied the code to, run <Code>yarn createDatabase</code> to create the database. It will prompt you for the user name and password.
 Typically you'll use "postgres" as user name and the password you choose in the "Install Database" step. However,
 you can also use any login that have super user privilege. If you already have a database created, it'll also
 prompt you if you want to delete and re-create the database.

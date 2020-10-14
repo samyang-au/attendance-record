@@ -4,10 +4,7 @@
     "private": false,
     "license": "MIT",
     "scripts": {
-        "createDatabase": "ts-node ./database/create-database.ts"
-    },
-    "dependencies": {
-        "ts-node": "^9.0.0",
-        "typescript": "^4.0.3"
+        "createDatabase": "cd database;yarn createDatabase",
+        "install:all": "cd client;rm -rf node_modules;yarn;cd ..;cd database;rm -rf node_modules;yarn;cd ..;cd graph;rm -rf node_modules;yarn;cd .."
     }
 }
