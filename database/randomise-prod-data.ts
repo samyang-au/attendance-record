@@ -14,10 +14,9 @@ if (fs.existsSync(prodPath)) {
     let index = 0
 
     while (line = liner.next()) {
-        let lineString = line.toString()
-        lineString = lineString.substr(0, lineString.length - 1)
+        let lineString = line.toString().replace('\n', '').replace('\r', '')
+
         if (columns === undefined) {
-            lineString = lineString.substr(1)
             columns = {}
             lineString.split(',').forEach((c, i) => {
                 columns[c] = i
@@ -59,9 +58,11 @@ if (fs.existsSync(prodPath)) {
             if (values[columns['EmailAddress']]) {
                 values[columns['EmailAddress']] = faker.internet.email()
             }
-            const date = faker.date.past(80)
-            values[columns['Birthdate']] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear() % 100}`
-            values[columns['DeceasedOrMovedDate']] = ''
+            values[columns['Birthdate']] = formatDate(faker.date.past(80))
+
+            if (values[columns['DeceasedOrMovedDate']]) {
+                values[columns['DeceasedOrMovedDate']] = formatDate(faker.date.past(20))
+            }
 
             result += values.join(',') + '\n'
         }
@@ -71,4 +72,8 @@ if (fs.existsSync(prodPath)) {
     fs.writeFileSync('./member.dev.csv', result)
 } else {
     console.log(`Cannot find file: ${prodPath}`)
+}
+
+function formatDate(date: Date) {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() % 100}`
 }
