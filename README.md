@@ -19,7 +19,7 @@ Install PostgreSQL from here https://www.postgresql.org/download/
 
 Choose your own password<br>
 Port: 5432 <br>
-Locale: en_AU.ISO8859-15
+Locale: en_AU.UTF8
 
 Launch stack builder is not required.
 
@@ -28,10 +28,13 @@ In a command prompt, change to the directory you copied the code to, run <cdoe>y
 
 ## Setup Database Table
 
-In a command prompt, change to the directory you copied the code to, run <Code>yarn createDatabase</code> to create the database. It will prompt you for the user name and password.
-Typically you'll use "postgres" as user name and the password you choose in the "Install Database" step. However,
-you can also use any login that have super user privilege. If you already have a database created, it'll also
-prompt you if you want to delete and re-create the database.
+In a command prompt, change to the directory you copied the code to, run <Code>yarn createDatabase</code> to create
+the database. It will prompt you for the user name and password. Typically you'll use "postgres" as user name
+and the password you choose in the "Install Database" step. However, you can also use any login that have super
+user privilege. If you already have a database created, it'll also prompt you if you want to delete and re-create
+the database. Alternatively, if you don't want to type in user name and password all the time, you can also add
+a <code>.env</code> file in the database folder for user_name and password, and the script will simply use those
+credentials. Note: only do this in test environment or you risk expose your super user password.
 
 During the very first run of <code>yarn createDatabase</code>, it will also create a <code>node_user</code>, and
 place a <code>.env</code> file in the graph directory. This will be the user express use to login to the database.

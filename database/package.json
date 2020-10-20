@@ -4,9 +4,13 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "createDatabase": "ts-node ./create-database.ts"
+    "createDatabase": "ts-node ./main.ts",
+    "randomiseProdData": "ts-node ./randomise-prod-data.ts"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "faker": "^5.1.0",
+    "n-readlines": "^1.0.0",
     "pg": "^8.3.3",
     "read": "^1.0.7",
     "ts-node": "^9.0.0",
@@ -14,6 +18,8 @@
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "@types/faker": "^5.1.2",
+    "@types/node": "^14.11.10",
     "@types/pg": "^7.14.5",
     "@types/read": "^0.0.28"
   }
