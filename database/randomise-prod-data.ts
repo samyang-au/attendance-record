@@ -75,5 +75,5 @@ if (fs.existsSync(prodPath)) {
 }
 
 function formatDate(date: Date) {
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() % 100}`
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }

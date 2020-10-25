@@ -8,6 +8,9 @@ tracing purpose and to be COVID-SAFE complient.
 ## Recommended IDE
 Visual Studio Code https://code.visualstudio.com
 
+## Install Node
+Install node version 12.18.4 or above from https://nodejs.org/en/download/
+
 ## Install yarn
 Follow the instructions on https://classic.yarnpkg.com/en/docs/install/
 

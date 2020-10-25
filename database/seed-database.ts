@@ -3,6 +3,7 @@ import { CORE_GROUP } from "../common/core-groups";
 import { SCHEMA } from "../common/database-constants";
 import * as fs from 'fs'
 import { LocalCache, loadCsv } from "./load-csv";
+import * as argon2 from 'argon2'
 
 const lineByLine = require('n-readlines')
 
@@ -28,10 +29,11 @@ export async function seedDatabase(dbClient: Client) {
     `)
 
     console.log('create groups')
-    await dbClient.query(`
+    const adminGroupId = await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
         VALUES ('${CORE_GROUP.Admin}', '2020-1-1')
-    `)
+        RETURNING id
+    `).then(result => result.rows[0].id)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
         VALUES ('${CORE_GROUP.Committee}', '2020-1-1')
@@ -51,6 +53,38 @@ export async function seedDatabase(dbClient: Client) {
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
         VALUES ('${CORE_GROUP.ExtendedFamily}', '2020-1-1')
+    `)
+
+    console.log('creat admin user')
+    const adminPasswordHash = await argon2.hash('admin')
+    const adminId = await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."member" (
+            english_given_name,
+            user_name,
+            password,
+            password_reset_required,
+            inactive
+        ) VALUES (
+            'Admin',
+            'admin',
+            '${adminPasswordHash}',
+            true,
+            true
+        ) RETURNING id
+    `).then(result => result.rows[0].id)
+
+    await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."group_member" (
+            group_id,
+            member_id,
+            start_date,
+            order_id
+        ) VALUES (
+            ${adminGroupId},
+            ${adminId},
+            '2020-1-1',
+            1
+        )
     `)
 
     const env = process.env.env || 'dev'
