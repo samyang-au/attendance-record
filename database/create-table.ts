@@ -63,7 +63,7 @@ export async function createTable(dbClient: Client) {
                 alias text,
                 email text UNIQUE,
                 user_name varchar(50) UNIQUE,
-                password text,
+                password_hash text,
                 password_reset_required boolean,
                 legacy_id varchar(20) UNIQUE,
                 gender character(1),

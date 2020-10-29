@@ -48,7 +48,7 @@ export async function createExpressUser(dbClient: Client) {
         await dbClient.query(`
             CREATE USER ${userName} WITH LOGIN NOCREATEDB NOSUPERUSER NOCREATEROLE NOINHERIT NOREPLICATION ENCRYPTED PASSWORD '${password}';
         `)
-        fs.writeFileSync('../graph/.env', `user_name=${userName}\npassword=${password}\nport=${process.env.port}`)
+        fs.writeFileSync('../graph/.env', `user_name=${userName}\npassword=${password}\nport=${process.env.port}\nsecret=${uuid()}`)
         console.log('user credential exported to graph .env')
     }
 

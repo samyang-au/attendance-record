@@ -1,4 +1,6 @@
 type Login {
-    token: String,
-    errorMessage: String
+    id: ID,
+    token: String
+    passwordResetRequired: Boolean
+    status: Boolean
 }

@@ -61,7 +61,7 @@ export async function seedDatabase(dbClient: Client) {
         INSERT INTO "${SCHEMA}"."member" (
             english_given_name,
             user_name,
-            password,
+            password_hash,
             password_reset_required,
             inactive
         ) VALUES (
