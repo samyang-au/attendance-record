@@ -1,0 +1,8 @@
+type GroupMember {
+    id: ID!
+    group: Group!
+    member: Member!
+    start_date: String!
+    end_date: String
+    order_id: Int
+}

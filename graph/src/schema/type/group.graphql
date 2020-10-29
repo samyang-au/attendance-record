@@ -1,0 +1,8 @@
+type Group {
+    id: ID!
+    group_name: String
+    start_date: String!
+    end_date: String
+    parent: Group
+    order_id: Int
+}

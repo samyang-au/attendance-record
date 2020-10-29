@@ -1,0 +1,5 @@
+type Attendance {
+    id: ID!
+    record: Record!
+    member: Member!
+}

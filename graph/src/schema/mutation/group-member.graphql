@@ -1,0 +1,4 @@
+type mutation {
+    addGroupMember(groupId: Int!, memberId: Int!): GroupMember
+    removeGroupMember(groupId: Int!, memberId: Int!): Boolean
+}

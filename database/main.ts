@@ -3,6 +3,7 @@ import { Client } from 'pg'
 import { DB_NAME } from '../common/database-constants'
 import { createDatabase } from './create-database'
 import { createExpressUser } from './create-express-user'
+import { createStoredProc } from './create-stored-proc'
 import { createTable } from './create-table'
 import { readPromise } from './readPromise'
 import { seedDatabase } from './seed-database'
@@ -16,10 +17,10 @@ async function main() {
     const databaseCreated = await createDatabase(user, password)
 
     if (databaseCreated) {
-        let dbClient: Client;
+        let dbClient: Client
         try {
             dbClient = new Client({
-                port: Number(process.env.port),
+                port: Number(process.env.port || '5432'),
                 user,
                 password,
                 database: DB_NAME
@@ -29,6 +30,7 @@ async function main() {
 
             await createTable(dbClient)
             await createExpressUser(dbClient)
+            await createStoredProc(dbClient)
             await seedDatabase(dbClient)
         } catch (e) {
             console.log(e)

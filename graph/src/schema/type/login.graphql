@@ -1,0 +1,4 @@
+type Login {
+    token: String,
+    errorMessage: String
+}

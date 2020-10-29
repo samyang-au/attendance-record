@@ -50,3 +50,7 @@ elevate its privilege.
 
 NOTE: if you are connected to the database (e.g. via pgAdmin) then the script will not be able to drop the database.
 Make sure you disconnect all the connection first before running the script.
+
+## Configure SSL
+https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/
+

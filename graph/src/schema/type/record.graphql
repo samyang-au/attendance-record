@@ -1,0 +1,5 @@
+type Record {
+    id: ID!
+    group: Group!
+    date: String!
+}

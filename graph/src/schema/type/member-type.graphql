@@ -1,0 +1,4 @@
+type MemberType {
+    id: ID!
+    name: String!
+}

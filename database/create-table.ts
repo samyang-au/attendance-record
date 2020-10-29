@@ -27,7 +27,7 @@ export async function createTable(dbClient: Client) {
             CREATE TABLE "${SCHEMA}"."member_type"
             (
                 id smallserial,
-                name varchar(20) UNIQUE,
+                name varchar(20) UNIQUE NOT NULL,
                 PRIMARY KEY (id)
             );
 
@@ -143,8 +143,8 @@ export async function createTable(dbClient: Client) {
             (
                 id smallserial,
                 record_id smallint NOT NULL,
-                name text,
-                value text,
+                name text NOT NULL,
+                value text NOT NULL,
                 PRIMARY KEY (id),
                 CONSTRAINT record_id_constraint FOREIGN KEY (record_id)
                     REFERENCES "${SCHEMA}".record (id) MATCH SIMPLE

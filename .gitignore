@@ -24,3 +24,6 @@ yarn-error.log*
 
 .env
 *.prod.csv
+rootCA.*
+server.*
+v3.ext

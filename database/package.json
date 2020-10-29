@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "createDatabase": "ts-node ./main.ts",
+    "resetStoredProc": "ts-node ./reset-stored-proc",
     "randomiseProdData": "ts-node ./randomise-prod-data.ts"
   },
   "dependencies": {

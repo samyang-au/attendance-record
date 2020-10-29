@@ -1,0 +1,6 @@
+type Offering {
+    id: ID!
+    group: Group!
+    date: String!
+    amount: Float!
+}

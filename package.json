@@ -5,6 +5,6 @@
     "license": "MIT",
     "scripts": {
         "createDatabase": "cd database;yarn createDatabase",
-        "install:all": "cd client;rm -rf node_modules;yarn;cd ..;cd database;rm -rf node_modules;yarn;cd ..;cd graph;rm -rf node_modules;yarn;cd .."
+        "install:all": "cd client;yarn;cd ..;cd database;yarn;cd ..;cd graph;yarn;cd .."
     }
 }
