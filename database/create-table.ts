@@ -70,6 +70,7 @@ export async function createTable(dbClient: Client) {
                 member_type_id smallint,
                 address_id smallint,
                 inactive boolean,
+                notes text,
                 PRIMARY KEY (id),
                 CONSTRAINT member_type_id_constraint FOREIGN KEY (member_type_id)
                     REFERENCES "${SCHEMA}".member_type (id) MATCH SIMPLE,

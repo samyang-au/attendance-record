@@ -1,3 +1,4 @@
 type Query {
     login(userName: String, password: String): Login
+    updatePassword(password: String): Boolean
 }

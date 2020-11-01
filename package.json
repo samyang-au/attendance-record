@@ -5,6 +5,9 @@
     "license": "MIT",
     "scripts": {
         "createDatabase": "cd database;yarn createDatabase",
-        "install:all": "cd client;yarn;cd ..;cd database;yarn;cd ..;cd graph;yarn;cd .."
+        "install:all": "yarn;cd client;yarn;cd ..;cd database;yarn;cd ..;cd graph;yarn;cd .."
+    },
+    "devDependencies": {
+        "@types/jest": "^26.0.15"
     }
 }

@@ -2,5 +2,4 @@ type Login {
     id: ID,
     token: String
     passwordResetRequired: Boolean
-    status: Boolean
 }
