@@ -30,29 +30,33 @@ export async function seedDatabase(dbClient: Client) {
 
     console.log('create groups')
     const adminGroupId = await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.Admin}', '2020-1-1')
         RETURNING id
     `).then(result => result.rows[0].id)
     await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.Committee}', '2020-1-1')
     `)
     await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
-        VALUES ('${CORE_GROUP.RE}', '2020-1-1')
-    `)
-    await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.CookingGroup}', '2020-1-1')
     `)
     await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
+        VALUES ('${CORE_GROUP.ExtendedFamily}', '2020-1-1')
+    `)
+    await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.Family}', '2020-1-1')
     `)
     await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (group_name, start_date)
-        VALUES ('${CORE_GROUP.ExtendedFamily}', '2020-1-1')
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
+        VALUES ('${CORE_GROUP.RE}', '2020-1-1')
+    `)
+    await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
+        VALUES ('${CORE_GROUP.Usher}', '2020-1-1')
     `)
 
     console.log('creat admin user')
@@ -139,7 +143,7 @@ export async function seedDatabase(dbClient: Client) {
                 const rootFamilyId = await dbClient.query(`
                     SELECT id
                     FROM "${SCHEMA}"."group"
-                    WHERE group_name='${CORE_GROUP.Family}'
+                    WHERE name='${CORE_GROUP.Family}'
                 `).then(result => Number(result.rows[0].id))
 
                 await createFamily(getValueFunc, rootFamilyId, dbClient)
@@ -304,7 +308,7 @@ async function createExtendedFamily(dbClient: Client) {
                     LEFT JOIN "attendance-record".group g2 ON g1.id = g2.parent_id
                     LEFT JOIN "attendance-record".group_member gm ON g2.id = gm.group_id
                     LEFT JOIN "attendance-record".member m ON gm.member_id = m.id AND m.inactive = false
-                WHERE g1.group_name = 'Family' AND m.address_id IS NOT NULL
+                WHERE g1.name = 'Family' AND m.address_id IS NOT NULL
                 GROUP BY m.address_id
                 HAVING Count(DISTINCT g2.id) > 1
             ) extFam
@@ -312,14 +316,14 @@ async function createExtendedFamily(dbClient: Client) {
             LEFT JOIN "attendance-record".group_member gm ON m.id = gm.member_id
             LEFT JOIN "attendance-record".group g2 ON g2.id = gm.group_id
             LEFT JOIN "attendance-record".group g1 ON g2.parent_id = g1.id
-        WHERE g1.group_name = 'Family'
+        WHERE g1.name = 'Family'
         ORDER BY m.address_id, g2.id, gm.order_id
     `).then(result => result.rows)
 
     const rootExtendedFamilyId = await dbClient.query(`
         SELECT id
         FROM "${SCHEMA}"."group"
-        WHERE group_name='${CORE_GROUP.ExtendedFamily}'
+        WHERE name='${CORE_GROUP.ExtendedFamily}'
     `).then(result => Number(result.rows[0].id))
 
     let lastAddressId: number, extendedFamilyId: number

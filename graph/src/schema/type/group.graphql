@@ -1,6 +1,6 @@
 type Group {
     id: ID!
-    group_name: String
+    name: String
     start_date: String!
     end_date: String
     parent: Group

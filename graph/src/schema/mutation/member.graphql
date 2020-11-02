@@ -1,4 +1,4 @@
-type mutation {
-    updatePassword(password: String!): Member!
+type Mutation {
+    updatePassword(password: String!): [String]!
     resetPassword(userName: String!, password: String!): Member!
 }

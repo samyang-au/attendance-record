@@ -87,7 +87,7 @@ export async function createTable(dbClient: Client) {
             CREATE TABLE "${SCHEMA}"."group"
             (
                 id smallserial,
-                group_name varchar(30),
+                name varchar(30),
                 start_date date NOT NULL,
                 end_date date,
                 parent_id smallint,

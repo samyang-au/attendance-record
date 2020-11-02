@@ -5,4 +5,5 @@ export const CORE_GROUP = {
     ExtendedFamily: 'Extended Family',
     Family: 'Family',
     RE: 'RE',
+    Usher: 'Usher',
 }
