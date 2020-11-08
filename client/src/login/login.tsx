@@ -4,6 +4,10 @@ import _ from 'lodash'
 import { t, T } from '../translations/translate';
 import { Login as TLogin, LoginVariables } from './__generated__/Login';
 import { passwordResetRequiredVar, tokenVar } from '../reactive-var';
+import { Language } from '../translations/language';
+
+import logo from '../img/tjc_logo.png'
+import './login.scss'
 
 const LOGIN = gql`
     mutation Login($username: String!, $password: String!) {
@@ -51,12 +55,18 @@ export const Login = () => {
     }
 
     return (
-        <div className="Login">
-            <label htmlFor="username"><T k="login:userNameLabel" /></label>
-            <input type="text" id="username" name="username" onChange={onChangeUsername} onKeyPress={onKeyPress} />
-            <label htmlFor="password"><T k="login:password" /></label>
-            <input type="password" id="password" name="password" value={password} onChange={onChangePassword} onKeyPress={onKeyPress} />
-            <button type="button" onClick={onLogin} disabled={_.isEmpty(username) || _.isEmpty(password)}><T k="login:signinButtonText" /></button>
+        <div className="login">
+            <header>
+                <img src={logo} className="logo" alt="logo" />
+                <Language />
+            </header>
+            <div className="login-inputs">
+                <label htmlFor="username"><T k="login:userNameLabel" /></label>
+                <input type="text" id="username" name="username" autoCapitalize="none" autoCorrect="off" onChange={onChangeUsername} onKeyPress={onKeyPress} />
+                <label htmlFor="password"><T k="login:password" /></label>
+                <input type="password" id="password" name="password" value={password} onChange={onChangePassword} onKeyPress={onKeyPress} />
+                <button onClick={onLogin} disabled={_.isEmpty(username) || _.isEmpty(password)}><T k="login:signinButtonText" /></button>
+            </div>
         </div>
     )
 }

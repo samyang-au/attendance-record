@@ -15,7 +15,7 @@ export const Language = () => {
     }
 
     return (
-        <div onClick={onLanguageClick}>
+        <div className="language" onClick={onLanguageClick}>
             {
                 currentLangage === 'en' ? "中文" : "English"
             }

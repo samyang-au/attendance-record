@@ -1,0 +1,13 @@
+html, body, #root, .app {
+    height: 100%;
+}
+
+.app {
+    display: flex;
+    font-size: 20px;
+    
+    button, input {
+        margin: 10px;
+        font-size: 20px;
+    }
+}

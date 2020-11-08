@@ -1,16 +1,14 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import logo from './img/tjc_logo.png'
-
-import './App.css';
 import { Login } from './login/login';
-import { Language } from './translations/language';
 import { currentLanguageVar, tokenVar } from './reactive-var';
 import _ from 'lodash';
+import config from './config.json'
+import './app.scss'
 
 const httpLink = createHttpLink({
-  uri: 'https://localhost:433/graphql',
+  uri: config.GRAPH_URL,
 })
 
 const authLink = setContext((_, { headers }) => ({
@@ -36,8 +34,6 @@ const App = () => {
     <ApolloProvider client={client}>
       <div className={'app ' + currentLangage}>
         <div className="header">
-          <img src={logo} alt="logo" />
-          <Language />
           {
             !_.isEmpty(token) ? <div onClick={onLogout}>Logout</div> : null
           }
