@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import logo from './logo.png';
+import logo from './img/tjc_logo.png'
 
 import './App.css';
 import { Login } from './login/login';
@@ -13,13 +13,10 @@ const httpLink = createHttpLink({
   uri: 'https://localhost:433/graphql',
 })
 
-const authLink = setContext((a, { headers }) => {
-  // const token = readFragment
-  return {
-    ...headers,
-    authorization: tokenVar()
-  }
-})
+const authLink = setContext((_, { headers }) => ({
+  ...headers,
+  authorization: tokenVar()
+}))
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
@@ -29,10 +26,8 @@ const client = new ApolloClient({
 const App = () => {
   const currentLangage = useReactiveVar(currentLanguageVar)
   const token = useReactiveVar(tokenVar)
-  console.log('token', token)
 
   const onLogout = () => {
-    console.log('logout')
     client.resetStore()
     tokenVar('')
   }
