@@ -56,7 +56,7 @@ describe('auth-resolver', () => {
         })
 
         it('should return empty object if user name is not found', async () => {
-            const result = await resolver.Query.login(
+            const result = await resolver.Mutation.login(
                 undefined,
                 { userName: 'invalid', password: 'password' },
                 { pool },
@@ -67,7 +67,7 @@ describe('auth-resolver', () => {
         })
 
         it('should return empty object if password is invalid', async () => {
-            const result = await resolver.Query.login(
+            const result = await resolver.Mutation.login(
                 undefined,
                 { userName: 'test_user', password: 'invalid' },
                 { pool },
@@ -78,7 +78,7 @@ describe('auth-resolver', () => {
         })
 
         it('should return login object when user name and password is vaild', async () => {
-            const result = await resolver.Query.login(
+            const result = await resolver.Mutation.login(
                 undefined,
                 { userName: 'test_user', password: 'password' },
                 { pool },

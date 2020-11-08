@@ -1,0 +1,7 @@
+{
+    "login:error": "Unable login, please try again later.",
+    "login:invalid": "Invalid user name or password.",
+    "login:password": "Password",
+    "login:signinButtonText": "Login",
+    "login:userNameLabel": "User Name"
+}

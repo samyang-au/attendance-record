@@ -44,7 +44,7 @@ export async function seedDatabase(dbClient: Client) {
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
-        VALUES ('${CORE_GROUP.ExtendedFamily}', '2020-1-1')
+        VALUES ('${CORE_GROUP.AttendanceGrouping}', '2020-1-1')
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
@@ -323,7 +323,7 @@ async function createExtendedFamily(dbClient: Client) {
     const rootExtendedFamilyId = await dbClient.query(`
         SELECT id
         FROM "${SCHEMA}"."group"
-        WHERE name='${CORE_GROUP.ExtendedFamily}'
+        WHERE name='${CORE_GROUP.AttendanceGrouping}'
     `).then(result => Number(result.rows[0].id))
 
     let lastAddressId: number, extendedFamilyId: number

@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import logo from './logo.png';
 
-function App() {
+import './App.css';
+import { Login } from './login/login';
+import { Language } from './translations/language';
+import { currentLanguageVar, tokenVar } from './reactive-var';
+import _ from 'lodash';
+
+const httpLink = createHttpLink({
+  uri: 'https://localhost:433/graphql',
+})
+
+const authLink = setContext((a, { headers }) => {
+  // const token = readFragment
+  return {
+    ...headers,
+    authorization: tokenVar()
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
+
+const App = () => {
+  const currentLangage = useReactiveVar(currentLanguageVar)
+  const token = useReactiveVar(tokenVar)
+  console.log('token', token)
+
+  const onLogout = () => {
+    console.log('logout')
+    client.resetStore()
+    tokenVar('')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ApolloProvider client={client}>
+      <div className={'app ' + currentLangage}>
+        <div className="header">
+          <img src={logo} alt="logo" />
+          <Language />
+          {
+            !_.isEmpty(token) ? <div onClick={onLogout}>Logout</div> : null
+          }
+        </div>
+        {
+
+          _.isEmpty(token) ? <Login />
+            :
+            <div>login success</div>
+        }
+      </div>
+    </ApolloProvider>
+  )
 }
 
 export default App;

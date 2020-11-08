@@ -1,0 +1,7 @@
+{
+    "login:error": "暫時無法登入，請稍候再嘗試。",
+    "login:invalid": "帳號或密碼錯誤",
+    "login:password": "密碼",
+    "login:signinButtonText": "登入",
+    "login:userNameLabel": "帳號"
+}

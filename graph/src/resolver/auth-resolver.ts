@@ -6,7 +6,7 @@ import { checkAuthorization } from "../auth/authorization";
 import { passwordComplexityCheck } from '../../../common/password-complexity'
 
 export default {
-    Query: {
+    Mutation: {
         login: async (parent, { userName, password }: { userName: string, password: string }, context: TContext, info) => {
             const { id, password_hash, password_reset_required }: { id: number, password_hash: string, password_reset_required: boolean } =
                 await context.pool.query(`
@@ -36,8 +36,6 @@ export default {
             return {
             }
         },
-    },
-    Mutation: {
         updatePassword: async (parent, { password }: { password: string }, context: TContext, info) => {
             checkAuthorization(context)
             const errors = passwordComplexityCheck(password)

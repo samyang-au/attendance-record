@@ -4,14 +4,14 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "start:dev": "ts-node-dev --exit-child src/index.ts",
+    "start:dev": "rejectunauthorized=false ts-node-dev --exit-child index.ts",
     "test": "jest"
   },
   "dependencies": {
-    "apollo-server-express": "^2.18.2",
+    "apollo-server-express": "^2.19.0",
     "argon2": "^0.27.0",
     "dotenv": "^8.2.0",
-    "graphql": "^15.3.0",
+    "graphql": "^15.4.0",
     "jws": "^4.0.0",
     "merge-graphql-schemas": "^1.7.8",
     "pg": "^8.4.2",
@@ -25,6 +25,7 @@
     "@jest-mock/express": "^1.1.9",
     "@types/jws": "^3.2.2",
     "@types/pg": "^7.14.5",
+    "apollo": "^2.31.1",
     "babel-jest": "^26.6.1",
     "jest": "^26.6.1",
     "ts-node-dev": "^1.0.0"

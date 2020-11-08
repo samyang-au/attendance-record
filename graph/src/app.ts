@@ -19,11 +19,13 @@ export const app = () => {
     const apollo = new ApolloServer({
         typeDefs,
         resolvers,
-        context: ({ req }): TContext =>
-            ({
+        context: ({ req }): TContext => {
+            console.log(req.body)
+            return ({
                 pool,
                 user: verifyAndDecode(req.headers.authorization)
             })
+        }
     })
 
     const expressApp = express()
@@ -31,7 +33,7 @@ export const app = () => {
 
     const server = https.createServer({
         key: fs.readFileSync('./server.key'),
-        cert: fs.readFileSync('./server.crt')
+        cert: fs.readFileSync('./server.crt'),
     }, expressApp)
 
     server.listen({ port: 433 })
