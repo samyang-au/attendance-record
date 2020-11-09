@@ -3,22 +3,24 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import { t, T } from '../translations/translate';
 import { Login as TLogin, LoginVariables } from './__generated__/Login';
-import { passwordResetRequiredVar, tokenVar } from '../reactive-var';
-import { Language } from '../translations/language';
+import { tokenVar } from '../global/reactive-var';
+import { useHistory } from 'react-router-dom';
+import { ROUTE_MAIN, ROUTE_RESET_PASSWORD } from '../global/routes';
 
-import logo from '../img/tjc_logo.png'
-import './login.scss'
+import './login-reset-password.scss'
+import { AuthHeader } from './auth-header';
 
 const LOGIN = gql`
     mutation Login($username: String!, $password: String!) {
         login(userName: $username, password: $password) {
             token
-            passwordResetRequired
+            password_reset_required
         }
     }
 `
 
 export const Login = () => {
+    const history = useHistory()
     const [login] = useMutation<TLogin, LoginVariables>(LOGIN)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -42,11 +44,16 @@ export const Login = () => {
             console.log(response)
             if (response.errors) {
                 alert(t('login:error'))
-            } else if (!response.data?.login?.token || !response.data.login.passwordResetRequired) {
+            } else if (!response.data?.login?.token || response.data.login.password_reset_required === undefined) {
                 alert(t("login:invalid"))
             } else {
-                passwordResetRequiredVar(response.data.login.passwordResetRequired)
                 tokenVar(response.data.login.token)
+
+                if(response.data.login.password_reset_required) {
+                    history.push(ROUTE_RESET_PASSWORD)
+                } else {
+                    history.push(ROUTE_MAIN)
+                }
             }
         }).catch(() => {
             alert(t('login:error'))
@@ -56,10 +63,7 @@ export const Login = () => {
 
     return (
         <div className="login">
-            <header>
-                <img src={logo} className="logo" alt="logo" />
-                <Language />
-            </header>
+            <AuthHeader />
             <div className="login-inputs">
                 <label htmlFor="username"><T k="login:userNameLabel" /></label>
                 <input type="text" id="username" name="username" autoCapitalize="none" autoCorrect="off" onChange={onChangeUsername} onKeyPress={onKeyPress} />

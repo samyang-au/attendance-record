@@ -95,4 +95,4 @@ If the userName and password is valid, you should get a token back. This token w
 
 If you update the schema, in the <code>client</code> directory, run <code>yarn schema</code> to generate a new copy of <code>graphql-schema.json</code> (graph need to be running when running this). If you have <code>Apollo GraphQL</code> vscode plugin then it will type check your client side query and provide code completion when you write query. You can then run <code>yarn codegen</code> to generate types for the client side queries. It is recommended to open client folder on a separate vscode window so <code>Apollo GraphQL</code> plugin can work properly.
 
-To start the client, run <code>yarn start</code> in the <cdoe>client</code> folder. Graph also need to be running for the client to work.
+To start the client, run <code>yarn start</code> in the <cdoe>client</code> folder. You also need to start graph and trust the certificate (see graph section above) for the client to work.

@@ -29,7 +29,7 @@ export default {
                 return {
                     id,
                     token,
-                    passwordResetRequired: password_reset_required,
+                    password_reset_required,
                 }
             }
 

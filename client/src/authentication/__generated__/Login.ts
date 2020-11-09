@@ -10,7 +10,7 @@
 export interface Login_login {
   __typename: "Login";
   token: string | null;
-  passwordResetRequired: boolean | null;
+  password_reset_required: boolean | null;
 }
 
 export interface Login {
