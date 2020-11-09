@@ -1,7 +1,7 @@
 import React from 'react'
 
-import logo from '../img/tjc_logo.png'
-import { Language } from '../translations/language'
+import logo from 'img/tjc_logo.png'
+import { Language } from 'translations/language'
 
 export const AuthHeader = () => (
     <header>

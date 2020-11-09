@@ -2,8 +2,8 @@ import { useReactiveVar } from '@apollo/client'
 import _ from 'lodash'
 import React from 'react'
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
-import { tokenVar } from '../global/reactive-var'
-import { ROUTE_LOGIN, ROUTE_MAIN, ROUTE_RESET_PASSWORD } from '../global/routes'
+import { tokenVar } from 'global/reactive-var'
+import { ROUTE_LOGIN, ROUTE_MAIN, ROUTE_RESET_PASSWORD } from 'global/routes'
 import { ResetPassword } from './reset-password'
 
 export const SecurePages = () => {

@@ -3,7 +3,7 @@ import { useReactiveVar } from '@apollo/client'
 
 import en from './en.json'
 import ch from './ch.json'
-import { currentLanguageVar } from '../global/reactive-var'
+import { currentLanguageVar } from 'global/reactive-var'
 
 /**
  * Use this when adding tranlation to components so it'll respond

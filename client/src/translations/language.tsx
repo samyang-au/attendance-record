@@ -1,6 +1,6 @@
 import React from 'react'
 import { useReactiveVar } from '@apollo/client'
-import { currentLanguageVar } from '../global/reactive-var'
+import { currentLanguageVar } from 'global/reactive-var'
 
 
 export const Language = () => {

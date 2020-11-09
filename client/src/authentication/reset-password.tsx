@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { T } from '../translations/translate'
+import { T } from 'translations/translate'
 import { AuthHeader } from './auth-header'
 import { passwordComplexityCheck } from '../../../common/password-complexity'
 

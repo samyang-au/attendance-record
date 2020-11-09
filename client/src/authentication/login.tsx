@@ -1,11 +1,11 @@
 import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react'
 import _ from 'lodash'
-import { t, T } from '../translations/translate';
+import { t, T } from 'translations/translate';
 import { Login as TLogin, LoginVariables } from './__generated__/Login';
-import { tokenVar } from '../global/reactive-var';
+import { tokenVar } from 'global/reactive-var';
 import { useHistory } from 'react-router-dom';
-import { ROUTE_MAIN, ROUTE_RESET_PASSWORD } from '../global/routes';
+import { ROUTE_MAIN, ROUTE_RESET_PASSWORD } from 'global/routes';
 
 import './login-reset-password.scss'
 import { AuthHeader } from './auth-header';
