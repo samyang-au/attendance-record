@@ -5,7 +5,6 @@
   "dependencies": {
     "@apollo/client": "^3.2.5",
     "@common/common": "file:../common/",
-    "@craco/craco": "^5.8.0",
     "@types/react-router-dom": "^5.1.6",
     "graphql": "^15.4.0",
     "jws": "^4.0.0",
@@ -30,10 +29,10 @@
     "apollo": "^2.31.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "schema": "apollo schema:download -k --endpoint=https://localhost:433/graphql graphql-schema.json",
     "codegen": "apollo client:codegen --target=typescript"
   },
