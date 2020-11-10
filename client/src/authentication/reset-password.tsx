@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { T } from 'translations/translate'
 import { AuthHeader } from './auth-header'
-import { passwordComplexityCheck } from '../../../common/password-complexity'
+import { passwordComplexityCheck } from '@common/common'
 
 import './login-reset-password.scss'
 
