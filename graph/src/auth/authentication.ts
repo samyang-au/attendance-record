@@ -1,14 +1,8 @@
 import { sign, decode, verify } from "jws"
 import { Unauthorized } from "./authorization"
+import { TokenContent } from '../../../common'
 
 const TIMEOUT = (Number(process.env.timeout) || 15) * 60000 // default to 15 min
-
-export type TokenContent = {
-    id: number,
-    userName: string,
-    groups: string[],
-    expiry: number
-}
 
 export const createToken = (content: Omit<TokenContent, 'expiry'>) =>
     sign({

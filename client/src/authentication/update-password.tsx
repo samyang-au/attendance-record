@@ -9,6 +9,7 @@ import _ from 'lodash'
 import './login-update-password.scss'
 import { useHistory } from 'react-router-dom'
 import { ROUTE_MAIN } from 'global/const'
+import { passwordResetRequiredVar } from 'global/var'
 
 const UPDATE_PASSWORD_MUTATION = gql`
     mutation UpdatePasswordMutation($password: String!) {
@@ -44,6 +45,7 @@ export const UpdatePassword = () => {
             if(response.data == null || !_.isEmpty(response.data.updatePassword)) {
                 alert(t('password:error:unable-to-update'))
             } else {
+                passwordResetRequiredVar(false)
                 history.push(ROUTE_MAIN)
             }
         })

@@ -4,7 +4,8 @@ import resolver from "../auth-resolver"
 import * as argon2 from 'argon2'
 import { SCHEMA } from "../../../../common/database-constants"
 import { CORE_GROUP } from "../../../../common/core-groups"
-import { TokenContent, verifyAndDecode } from "../../auth/authentication"
+import { verifyAndDecode } from "../../auth/authentication"
+import { TokenContent } from "../../../../common"
 
 describe('auth-resolver', () => {
     describe('login resolver', () => {
@@ -91,7 +92,7 @@ describe('auth-resolver', () => {
             expect(token.id).toBe(testUserId)
             expect(token.userName).toBe('test_user')
             expect(token.groups).toEqual(['Usher'])
-            expect(result.passwordResetRequired).toBe(true)
+            expect(result.password_reset_required).toBe(true)
         })
     })
 

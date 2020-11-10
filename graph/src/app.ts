@@ -6,7 +6,8 @@ import https from 'https'
 import fs from 'fs'
 import { Pool } from 'pg'
 import { createConnectionPool } from './connection-pool/connection-pool'
-import { TokenContent, verifyAndDecode } from './auth/authentication'
+import { verifyAndDecode } from './auth/authentication'
+import { TokenContent } from '../../common'
 
 export type TContext = {
     pool: Pool,

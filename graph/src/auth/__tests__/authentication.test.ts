@@ -1,5 +1,6 @@
 import { decode, sign } from "jws"
-import { TokenContent, verifyAndDecode } from "../authentication"
+import { TokenContent } from "../../../../common"
+import { verifyAndDecode } from "../authentication"
 
 describe('authentication', () => {
     describe('createToken', () => {

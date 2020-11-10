@@ -2,7 +2,7 @@ import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react'
 import _ from 'lodash'
 import { t, T } from 'translations/translate';
-import { tokenVar } from 'global/var';
+import { passwordResetRequiredVar, tokenVar } from 'global/var';
 import { useHistory } from 'react-router-dom';
 import { ROUTE_MAIN, ROUTE_UPDATE_PASSWORD } from 'global/const';
 import { AuthHeader } from './auth-header';
@@ -47,6 +47,7 @@ export const Login = () => {
                 alert(t("login:invalid"))
             } else {
                 tokenVar(response.data.login.token)
+                passwordResetRequiredVar(response.data.login.password_reset_required || false)
 
                 if(response.data.login.password_reset_required) {
                     history.push(ROUTE_UPDATE_PASSWORD)
