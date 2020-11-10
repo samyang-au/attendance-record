@@ -3,18 +3,18 @@ import { useReactiveVar } from '@apollo/client'
 
 import en from './en.json'
 import ch from './ch.json'
-import { currentLanguageVar } from 'global/reactive-var'
+import { currentLanguageVar } from 'global/var'
 
 /**
  * Use this when adding tranlation to components so it'll respond
  * to language updates.
  */
-export const T = ({ k: key }: { k: keyof typeof en }) => {
+export const T = ({ k: key, className }: { k: keyof typeof en, className?: string }) => {
     const currentLangage = useReactiveVar(currentLanguageVar)
     const translations = currentLangage === 'en' ? en : ch
 
     return (
-        <div className={currentLangage}>{translations[key]}</div>
+        <div className={currentLangage + (className ? ' ' + className : '')}>{translations[key]}</div>
     )
 }
 

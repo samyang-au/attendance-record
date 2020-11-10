@@ -1,23 +1,21 @@
-import { useReactiveVar } from '@apollo/client'
 import _ from 'lodash'
 import React from 'react'
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
-import { tokenVar } from 'global/reactive-var'
-import { ROUTE_LOGIN, ROUTE_MAIN, ROUTE_RESET_PASSWORD } from 'global/routes'
-import { ResetPassword } from './reset-password'
+import { tokenVar } from 'global/var'
+import { ROUTE_LOGIN, ROUTE_MAIN, ROUTE_UPDATE_PASSWORD } from 'global/const'
+import { UpdatePassword } from './update-password'
 
 export const SecurePages = () => {
     const history = useHistory()
-    const token = useReactiveVar(tokenVar)
 
-    if(_.isEmpty(token)) {
+    if(_.isEmpty(tokenVar())) {
         history.push(ROUTE_LOGIN)
     }
 
     return (
         <Switch>
-            <Route path={ROUTE_RESET_PASSWORD}>
-                <ResetPassword />
+            <Route path={ROUTE_UPDATE_PASSWORD}>
+                <UpdatePassword />
             </Route>
             <Route path={ROUTE_MAIN}>
                 <Main />

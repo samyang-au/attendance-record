@@ -4,7 +4,14 @@
     "login:password": "Password",
     "login:signinButtonText": "Login",
     "login:userNameLabel": "User Name",
-    "reset-password:new-password": "Please enter new password",
-    "reset-password:confirm-password": "Please reconfirm password",
-    "reset-password:update-password": "Update Password"
+    "password:new-password": "Please enter new password",
+    "password:confirm-password": "Please reconfirm password",
+    "password:update-password": "Update Password",
+    "password:error:length": "length should be >= 6",
+    "password:error:lowercase": "at least 1 lower case letter",
+    "password:error:uppercase": "at least 1 upper case letter",
+    "password:error:number": "at least 1 number",
+    "password:error:special": "at least 1 special characters",
+    "password:error:confirm-match": "confirm password match",
+    "password:error:unable-to-update": "Unable to update password, please try again later."
 }

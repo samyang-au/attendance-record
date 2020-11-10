@@ -1,26 +1,29 @@
 import React from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar, from } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar, from, ApolloLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { setContext } from '@apollo/client/link/context'
 import { Login } from './authentication/login';
-import { currentLanguageVar, tokenVar } from './global/reactive-var';
+import { currentLanguageVar, tokenVar } from './global/var';
 import config from './config.json'
 import './app.scss'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { SecurePages } from './authentication/secure-pages';
-import { ROUTE_LOGIN, ROUTE_SECURE } from './global/routes';
+import { ROUTE_LOGIN, ROUTE_SECURE } from './global/const';
 
 const httpLink = createHttpLink({
   uri: config.GRAPH_URL,
 })
 
-const authMiddleware = setContext((_, { headers }) => ({
-  ...headers,
-  authorization: tokenVar()
-}))
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext({
+    headers: {
+      authorization: tokenVar()
+    }
+  })
+  return forward(operation)
+})
 
-const logoutMiddleware = onError(({ networkError }) => {
-  console.log('networkError', networkError)
+const logoutMiddleware = onError((error) => {
+  window.location.href = ROUTE_LOGIN
 })
 
 const client = new ApolloClient({
@@ -34,11 +37,6 @@ const client = new ApolloClient({
 
 const App = () => {
   const currentLangage = useReactiveVar(currentLanguageVar)
-
-  const onLogout = () => {
-    client.resetStore()
-    tokenVar('')
-  }
 
   return (
     <ApolloProvider client={client}>

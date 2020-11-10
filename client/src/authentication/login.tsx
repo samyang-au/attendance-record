@@ -2,16 +2,16 @@ import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react'
 import _ from 'lodash'
 import { t, T } from 'translations/translate';
-import { Login as TLogin, LoginVariables } from './__generated__/Login';
-import { tokenVar } from 'global/reactive-var';
+import { tokenVar } from 'global/var';
 import { useHistory } from 'react-router-dom';
-import { ROUTE_MAIN, ROUTE_RESET_PASSWORD } from 'global/routes';
-
-import './login-reset-password.scss'
+import { ROUTE_MAIN, ROUTE_UPDATE_PASSWORD } from 'global/const';
 import { AuthHeader } from './auth-header';
+import { LoginMutation, LoginMutationVariables } from './__generated__/LoginMutation';
 
-const LOGIN = gql`
-    mutation Login($username: String!, $password: String!) {
+import './login-update-password.scss'
+
+const LOGIN_MUTATION = gql`
+    mutation LoginMutation($username: String!, $password: String!) {
         login(userName: $username, password: $password) {
             token
             password_reset_required
@@ -21,14 +21,14 @@ const LOGIN = gql`
 
 export const Login = () => {
     const history = useHistory()
-    const [login] = useMutation<TLogin, LoginVariables>(LOGIN)
+    const [login] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN_MUTATION)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)
     const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
 
-    const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPress =(e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             onLogin()
         }
@@ -41,7 +41,6 @@ export const Login = () => {
                 password
             }
         }).then(response => {
-            console.log(response)
             if (response.errors) {
                 alert(t('login:error'))
             } else if (!response.data?.login?.token || response.data.login.password_reset_required === undefined) {
@@ -50,7 +49,7 @@ export const Login = () => {
                 tokenVar(response.data.login.token)
 
                 if(response.data.login.password_reset_required) {
-                    history.push(ROUTE_RESET_PASSWORD)
+                    history.push(ROUTE_UPDATE_PASSWORD)
                 } else {
                     history.push(ROUTE_MAIN)
                 }

@@ -20,7 +20,7 @@ export const app = () => {
         typeDefs,
         resolvers,
         context: ({ req }): TContext => {
-            // console.log(req.body)
+            // console.log(req.headers)
             return ({
                 pool,
                 user: verifyAndDecode(req.headers.authorization)

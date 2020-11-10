@@ -3,4 +3,10 @@ import { makeVar } from "@apollo/client"
 export type Languages = 'en' | 'ch'
 export const currentLanguageVar = makeVar<Languages>('en')
 
-export const tokenVar = makeVar('')
+let tok = ''
+export const tokenVar = (token?: string) => {
+    if (token) {
+        tok = token
+    }
+    return tok
+}
