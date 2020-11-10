@@ -7,6 +7,7 @@ let tok = ''
 export const tokenVar = (token?: string) => {
     if (token) {
         tok = token
+        localStorage.setItem('token', token)
     }
-    return tok
+    return tok || localStorage.getItem('token') || ''
 }
