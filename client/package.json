@@ -10,6 +10,8 @@
     "jws": "^4.0.0",
     "lodash": "^4.17.20",
     "node-sass": "^4.0.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -36,7 +38,8 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "schema": "apollo schema:download -k --endpoint=https://localhost:433/graphql graphql-schema.json",
-    "codegen": "apollo client:codegen --target=typescript"
+    "codegen": "apollo client:codegen --target=typescript",
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": "react-app"
