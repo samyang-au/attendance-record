@@ -1,6 +1,6 @@
 import { sign, decode, verify } from "jws"
 import { Unauthorized } from "./authorization"
-import { TokenContent } from '../../../common'
+import { TokenContent } from '../../../common/token-content-type'
 
 const TIMEOUT = (Number(process.env.timeout) || 15) * 60000 // default to 15 min
 

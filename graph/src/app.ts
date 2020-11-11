@@ -7,7 +7,7 @@ import fs from 'fs'
 import { Pool } from 'pg'
 import { createConnectionPool } from './connection-pool/connection-pool'
 import { verifyAndDecode } from './auth/authentication'
-import { TokenContent } from '../../common'
+import { TokenContent } from '../../common/token-content-type'
 
 export type TContext = {
     pool: Pool,

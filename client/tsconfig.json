@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "common/*": ["../../common/*"]
+    },
     "baseUrl": "src",
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,6 +26,5 @@
   },
   "include": [
     "src",
-    "../common"
   ]
 }

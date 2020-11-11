@@ -5,7 +5,7 @@ import * as argon2 from 'argon2'
 import { SCHEMA } from "../../../../common/database-constants"
 import { CORE_GROUP } from "../../../../common/core-groups"
 import { verifyAndDecode } from "../../auth/authentication"
-import { TokenContent } from "../../../../common"
+import { TokenContent } from "../../../../common/token-content-type"
 
 describe('auth-resolver', () => {
     describe('login resolver', () => {

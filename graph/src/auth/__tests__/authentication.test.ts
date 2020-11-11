@@ -1,5 +1,5 @@
 import { decode, sign } from "jws"
-import { TokenContent } from "../../../../common"
+import { TokenContent } from "../../../../common/token-content-type"
 import { verifyAndDecode } from "../authentication"
 
 describe('authentication', () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { t, T } from 'translations/translate'
 import { AuthHeader } from './auth-header'
-import { passwordComplexityCheck, passwordValidationErrorList } from '@common/common'
+import { passwordComplexityCheck, passwordValidationErrorList } from 'common/password-complexity'
 import { gql, useMutation } from '@apollo/client'
 import { UpdatePasswordMutation, UpdatePasswordMutationVariables } from './__generated__/UpdatePasswordMutation'
 import _ from 'lodash'

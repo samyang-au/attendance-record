@@ -1,5 +1,5 @@
 import { makeVar } from "@apollo/client"
-import { TokenContent } from "@common/common"
+import { TokenContent } from "common/token-content-type"
 import jws from 'jws'
 
 export type Languages = 'en' | 'ch'
@@ -34,13 +34,5 @@ export const tokenVar = (token?: string) => {
 
     return privateToken
 }
-
-// let privatePasswordResetRequired = false
-// export const passwordResetRequiredVar = (passwordResetRequired?: boolean | null) => {
-//     if(passwordResetRequired != null) {
-//         privatePasswordResetRequired = passwordResetRequired
-//     }
-//     return privatePasswordResetRequired
-// }
 
 export const passwordResetRequiredVar = makeVar(false)
