@@ -9,12 +9,12 @@ import { currentLanguageVar } from 'global/var'
  * Use this when adding tranlation to components so it'll respond
  * to language updates.
  */
-export const T = ({ k: key, className }: { k: keyof typeof en, className?: string }) => {
+export const T = ({ k: key, className, onClick }: { k: keyof typeof en, className?: string, onClick?: React.DOMAttributes<HTMLDivElement>['onClick'] }) => {
     const currentLangage = useReactiveVar(currentLanguageVar)
     const translations = currentLangage === 'en' ? en : ch
 
     return (
-        <div className={currentLangage + (className ? ' ' + className : '')}>{translations[key]}</div>
+        <div onClick={onClick} className={currentLangage + (className ? ' ' + className : '')}>{translations[key]}</div>
     )
 }
 

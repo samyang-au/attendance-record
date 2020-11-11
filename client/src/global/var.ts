@@ -9,7 +9,7 @@ const TOKEN = 'token'
 let tokenExpiry = -1
 let privateToken = ''
 export const tokenVar = (token?: string) => {
-    if (token) {
+    if (token !== undefined) {
         localStorage.setItem(TOKEN, token)
     }
 

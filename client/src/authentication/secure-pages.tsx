@@ -5,6 +5,10 @@ import { passwordResetRequiredVar, tokenVar } from 'global/var'
 import { ROUTE_LOGIN, ROUTE_MAIN, ROUTE_UPDATE_PASSWORD } from 'global/const'
 import { UpdatePassword } from './update-password'
 import { useReactiveVar } from '@apollo/client'
+import { AuthHeader } from './auth-header'
+import { SideMenu } from 'menu/side-menu'
+
+import './secure-pages.scss'
 
 export const SecurePages = () => {
     const history = useHistory()
@@ -15,12 +19,17 @@ export const SecurePages = () => {
     }
 
     if (passwordResetRequired) {
-        return <UpdatePassword />
+        return (
+            <div className="secure-pages">
+                <AuthHeader />
+                <UpdatePassword />
+            </div>
+        )
     }
 
     return (
         <div className="secure-pages">
-            secure-pages
+            <SideMenu />
             <Switch>
                 <Route path={ROUTE_UPDATE_PASSWORD}>
                     <UpdatePassword />
@@ -36,4 +45,4 @@ export const SecurePages = () => {
     )
 }
 
-const Main = () => <div>Main</div>
+const Main = () => <div><br/><br/>Main</div>

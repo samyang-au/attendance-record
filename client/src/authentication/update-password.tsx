@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { t, T } from 'translations/translate'
-import { AuthHeader } from './auth-header'
 import { passwordComplexityCheck, passwordValidationErrorList } from 'common/password-complexity'
 import { gql, useMutation } from '@apollo/client'
 import { UpdatePasswordMutation, UpdatePasswordMutationVariables } from './__generated__/UpdatePasswordMutation'
@@ -53,7 +52,6 @@ export const UpdatePassword = () => {
 
     return (
         <div className="update-password">
-            <AuthHeader />
             <div className="login-inputs">
                 <label htmlFor="password"><T k="password:new-password" /></label>
                 <input type="password" id="password" name="password" value={password} onChange={onChangePassword} onKeyPress={onKeyPress} />
