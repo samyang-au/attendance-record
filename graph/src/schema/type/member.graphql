@@ -7,11 +7,9 @@ type Member {
     alias: String
     email: String
     user_name: String
-    password: String
-    password_reset_required: Boolean
-    legacy_id: String
     gender: Gender
     member_type: MemberType
     # address: Address
     inactive: Boolean
+    notes: String
 }

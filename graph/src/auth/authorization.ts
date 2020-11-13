@@ -7,4 +7,6 @@ export const checkAuthorization = (context: TContext) => {
     if (context.user === undefined) {
         throw Unauthorized
     }
+
+    return true
 }

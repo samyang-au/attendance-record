@@ -1,6 +1,6 @@
 import { Pool } from "pg"
 import { rollbackTransaction, startTransaction } from "../../test-helper"
-import resolver from "../auth-resolver"
+import resolver from "../mutation/auth-resolver"
 import * as argon2 from 'argon2'
 import { SCHEMA } from "../../../../common/database-constants"
 import { CORE_GROUP } from "../../../../common/core-groups"

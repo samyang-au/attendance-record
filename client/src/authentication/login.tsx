@@ -15,6 +15,12 @@ const LOGIN_MUTATION = gql`
         login(userName: $username, password: $password) {
             token
             password_reset_required
+            member_info {
+                english_given_name
+                english_surname
+                chinese_given_name
+                chinese_surname
+            }
         }
     }
 `

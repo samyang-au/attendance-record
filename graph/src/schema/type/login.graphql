@@ -2,5 +2,5 @@ type Login {
     token: String
     password_reset_required: Boolean
     member_info: Member
-    root_groups: [Group]
+    groups: [Group]
 }

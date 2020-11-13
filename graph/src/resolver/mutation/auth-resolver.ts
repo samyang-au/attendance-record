@@ -1,9 +1,9 @@
-import { TContext } from "../app";
-import { STORED_PROC } from "../../../common/database-constants";
+import { TContext } from "../../app";
+import { STORED_PROC } from "../../../../common/database-constants";
 import { hash, verify } from 'argon2'
-import { createToken } from "../auth/authentication";
-import { checkAuthorization } from "../auth/authorization";
-import { passwordComplexityCheck } from '../../../common/password-complexity'
+import { createToken } from "../../auth/authentication";
+import { checkAuthorization } from "../../auth/authorization";
+import { passwordComplexityCheck } from '../../../../common/password-complexity'
 
 export default {
     Mutation: {
