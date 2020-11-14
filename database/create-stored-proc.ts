@@ -150,7 +150,8 @@ export async function createStoredProc(dbClient: Client) {
                 m.address_id,
                 m.inactive,
                 m.notes
-            FROM "${SCHEMA}"."member" m;
+            FROM "${SCHEMA}"."member" m
+            WHERE m.deceased = false;
         `,
     )
 

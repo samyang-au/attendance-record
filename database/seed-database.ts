@@ -227,7 +227,8 @@ async function createMember(getValue: GetValueFunc, memberTypeId: number, addres
             gender,
             member_type_id,
             address_id,
-            inactive
+            inactive,
+            deceased
         ) VALUES (
             ${getValue('FirstName')},
             ${getValue('LastName')},
@@ -239,7 +240,8 @@ async function createMember(getValue: GetValueFunc, memberTypeId: number, addres
             ${getValue('Gender')},
             ${memberTypeId},
             ${addressId},
-            ${getValue('DeceasedOrMovedDate') !== 'NULL' || getValue('Exclude_Directory').toUpperCase() === "'TRUE'"}
+            ${getValue('DeceasedOrMovedDate') !== 'NULL' || getValue('Exclude_Directory').toUpperCase() === "'TRUE'"},
+            ${getValue('Deceased').toUpperCase() === "'TRUE'"}
         )
     `)
 }
