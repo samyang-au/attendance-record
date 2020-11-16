@@ -4,6 +4,7 @@ import { typeDefs } from './schema'
 import { resolvers } from './resolver'
 import https from 'https'
 import fs from 'fs'
+import path from 'path'
 import { Pool } from 'pg'
 import { createConnectionPool } from './connection-pool/connection-pool'
 import { verifyAndDecode } from './auth/authentication'
@@ -21,7 +22,7 @@ export const app = () => {
         typeDefs,
         resolvers,
         context: ({ req }): TContext => {
-            // console.log(req.headers)
+            // console.log(req)
             return ({
                 pool,
                 user: verifyAndDecode(req.headers.authorization)
@@ -45,5 +46,10 @@ export const app = () => {
         server.close(() => {
             console.log('HTTP server closed')
         })
+    })
+
+    expressApp.use(express.static(path.resolve('../client/build')))
+    expressApp.get('/*', (_, res) => {
+        res.sendFile(path.resolve('../client/build/index.html'))
     })
 }

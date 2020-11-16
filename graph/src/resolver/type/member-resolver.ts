@@ -7,6 +7,11 @@ export default {
             parent.member_type_id && await context.pool.query(`
                 SELECT *
                 FROM ${STORED_PROC.getMemberType}(${parent.member_type_id})
-            `).then(result => result.rows[0] || {})
+            `).then(result => result.rows[0] || {}),
+        groups: async (parent: { id: number }, args, context: TContext, info) =>
+            parent.id && await context.pool.query(`
+            SELECT *
+            FROM ${STORED_PROC.getUserGroup}(${parent.id})
+        `).then(result => result.rows || []),
     }
 }

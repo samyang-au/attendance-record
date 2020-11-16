@@ -15,6 +15,7 @@ export const createToken = (content: Omit<TokenContent, 'expiry'>) =>
     })
 
 export const verifyAndDecode = (authHeader?: string): TokenContent | undefined => {
+    // throw Unauthorized
     if (authHeader) {
         if (verify(authHeader, 'HS256', process.env.secret)) {
             const content = JSON.parse(decode(authHeader).payload) as TokenContent

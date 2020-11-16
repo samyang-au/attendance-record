@@ -21,18 +21,47 @@ export const tokenVar = (token?: string) => {
             return ''
         }
 
-        const { expiry } = JSON.parse(jws.decode(privateToken).payload) as TokenContent
+        const { id, expiry, groups } = JSON.parse(jws.decode(privateToken).payload) as TokenContent
         tokenExpiry = expiry
+        privateUserId = id.toString()
+        privateUserGroups = groups
     }
 
     if(tokenExpiry < Date.now()) {
+        localStorage.setItem(TOKEN, '')
+        privateUserId = ''
         tokenExpiry = -1
         privateToken = ''
-        localStorage.setItem(TOKEN, '')
         return ''
     }
 
     return privateToken
+}
+
+let privateUserId: string = ''
+export const userIdVar = (userId?: string) => {
+    if(userId !== undefined) {
+        privateUserId = userId
+    }
+
+    if(privateUserId === '' && privateToken === '') {
+        tokenVar()
+    }
+
+    return privateUserId
+}
+
+let privateUserGroups: string[] = []
+export const userGroupsVar = (userGroups?: string[]) => {
+    if(userGroups !== undefined) {
+        privateUserGroups = userGroups
+    }
+
+    if(privateUserId === '' && privateToken === '') {
+        tokenVar()
+    }
+
+    return privateUserGroups
 }
 
 export const passwordResetRequiredVar = makeVar(false)

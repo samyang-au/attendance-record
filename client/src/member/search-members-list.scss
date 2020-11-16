@@ -1,0 +1,40 @@
+.search-members {
+    position: relative;
+    width: 100%;
+
+    .search-container-background {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        width: 100%;
+        z-index: 10;
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            max-width: 400px;
+            margin: auto;
+
+            .include-inactive-container {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                .include-inactive-label, div {
+                    display: inline;
+                }
+            }
+            
+            #include-inactive {
+                display: inline;
+            }
+        }
+    }
+
+    .search-members-items {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    }
+}

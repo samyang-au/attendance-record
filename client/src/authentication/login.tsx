@@ -2,7 +2,7 @@ import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react'
 import _ from 'lodash'
 import { t, T } from 'translations/translate';
-import { passwordResetRequiredVar, tokenVar } from 'global/var';
+import { passwordResetRequiredVar, tokenVar, userIdVar } from 'global/var';
 import { useHistory } from 'react-router-dom';
 import { ROUTE_MAIN, ROUTE_UPDATE_PASSWORD } from 'global/const';
 import { AuthHeader } from './auth-header';
@@ -13,14 +13,9 @@ import './login-update-password.scss'
 const LOGIN_MUTATION = gql`
     mutation LoginMutation($username: String!, $password: String!) {
         login(userName: $username, password: $password) {
+            id
             token
             password_reset_required
-            member_info {
-                english_given_name
-                english_surname
-                chinese_given_name
-                chinese_surname
-            }
         }
     }
 `
@@ -53,6 +48,7 @@ export const Login = () => {
                 alert(t("login:invalid"))
             } else {
                 tokenVar(response.data.login.token)
+                userIdVar(response.data.login.id)
                 passwordResetRequiredVar(response.data.login.password_reset_required || false)
 
                 if(response.data.login.password_reset_required) {
@@ -61,7 +57,7 @@ export const Login = () => {
                     history.push(ROUTE_MAIN)
                 }
             }
-        }).catch(() => {
+        }).catch((e) => {
             alert(t('login:error'))
         })
         setPassword('')

@@ -1,3 +1,4 @@
 type Query {
-    members: [Member]
+    members: [Member!]!
+    member(id: ID!): Member
 }

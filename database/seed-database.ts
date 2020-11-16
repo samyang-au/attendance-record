@@ -212,8 +212,19 @@ async function getAddressId(getValue: GetValueFunc, dbClient: Client) {
     return addressCache
 }
 
+const userNameCache: { [key: string]: true } = {}
+
 async function createMember(getValue: GetValueFunc, memberTypeId: number, addressId: number | 'NULL', dbClient: Client) {
     console.log('insert member data')
+
+    let userName = `${getValue('FirstName')}.${getValue('LastName')}`.replace(/[' -]*(\(.*\))*/g, '').toLowerCase()
+    let count = 0
+    while (userNameCache[userName + (count === 0 ? '' : count)]) {
+        count++
+    }
+    userName = userName + (count === 0 ? '' : count)
+    userNameCache[userName] = true
+    console.log(userName)
 
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."member" (
@@ -223,6 +234,7 @@ async function createMember(getValue: GetValueFunc, memberTypeId: number, addres
             chinese_surname,
             alias,
             email,
+            user_name,
             legacy_id,
             gender,
             member_type_id,
@@ -236,6 +248,7 @@ async function createMember(getValue: GetValueFunc, memberTypeId: number, addres
             ${getValue('ChineseLastName')},
             ${getValue('Alias')},
             ${getValue('TJCEmail', 'EmailAddress')},
+            '${userName}',
             ${getValue('MemberID')},
             ${getValue('Gender')},
             ${memberTypeId},

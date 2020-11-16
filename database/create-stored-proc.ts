@@ -45,12 +45,13 @@ export async function createStoredProc(dbClient: Client) {
         'IN "userId" int',
         `
             TABLE(
+                id smallint,
                 name varchar(30)
             )
         `,
         `
             RETURN QUERY
-            SELECT g.name
+            SELECT g.id, g.name
             FROM "attendance-record"."group_member" gm
                 LEFT JOIN "attendance-record"."group" g ON gm.group_id = g.id
             WHERE gm.member_id = "userId"
@@ -97,11 +98,11 @@ export async function createStoredProc(dbClient: Client) {
             RETURN QUERY
             SELECT
                 m.id,
-                m.english_given_name,
-                m.english_surname,
-                m.chinese_given_name,
-                m.chinese_surname,
-                m.alias,
+                COALESCE (m.english_given_name, ''),
+                COALESCE (m.english_surname, ''),
+                COALESCE (m.chinese_given_name, ''),
+                COALESCE (m.chinese_surname, ''),
+                COALESCE (m.alias, ''),
                 m.email,
                 m.user_name,
                 m.gender,
@@ -138,11 +139,11 @@ export async function createStoredProc(dbClient: Client) {
             RETURN QUERY
             SELECT
                 m.id,
-                m.english_given_name,
-                m.english_surname,
-                m.chinese_given_name,
-                m.chinese_surname,
-                m.alias,
+                COALESCE (m.english_given_name, ''),
+                COALESCE (m.english_surname, ''),
+                COALESCE (m.chinese_given_name, ''),
+                COALESCE (m.chinese_surname, ''),
+                COALESCE (m.alias, ''),
                 m.email,
                 m.user_name,
                 m.gender,

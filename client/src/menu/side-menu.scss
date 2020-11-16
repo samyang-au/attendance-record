@@ -6,7 +6,7 @@ $menu-width: 250px;
 .side-menu {
 
     .overlay{
-        position: absolute;
+        position: fixed;
         background-color: rgba(0,0,0,0.2);
         top: 0;
         left: 0;
@@ -15,7 +15,7 @@ $menu-width: 250px;
     }
 
     .expand-toggle, .menu-content {
-        position: absolute;
+        position: fixed;
         top: 0;
         background-color: rgb(127, 195, 250);
         box-shadow: 2px 2px 5px gray;
@@ -25,7 +25,7 @@ $menu-width: 250px;
         text-align: center;
         width: $toggle-size;
         height: $toggle-size;
-        z-index: 1;
+        z-index: 99;
 
         &::before {
             content: '';

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, useReactiveVar, from, ApolloLink } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
 import { Login } from './authentication/login';
 import { currentLanguageVar, tokenVar } from './global/var';
 import config from './config.json'
@@ -22,14 +21,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
-const logoutMiddleware = onError((error) => {
-  window.location.href = ROUTE_LOGIN
-})
-
 const client = new ApolloClient({
   link: from([
     authMiddleware,
-    logoutMiddleware,
     httpLink
   ]),
   cache: new InMemoryCache()
@@ -50,7 +44,7 @@ const App = () => {
               <SecurePages />
             </Route>
             <Route path="/">
-              <Redirect to={ROUTE_LOGIN} />
+              <Redirect to={ROUTE_LOGIN}/>
             </Route>
           </Switch>
         </div>

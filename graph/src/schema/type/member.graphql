@@ -1,10 +1,10 @@
 type Member {
     id: ID!
-    english_given_name: String
-    english_surname: String
-    chinese_given_name: String
-    chinese_surname: String
-    alias: String
+    english_given_name: String!
+    english_surname: String!
+    chinese_given_name: String!
+    chinese_surname: String!
+    alias: String!
     email: String
     user_name: String
     gender: Gender
@@ -12,4 +12,5 @@ type Member {
     # address: Address
     inactive: Boolean
     notes: String
+    groups: [Group]
 }

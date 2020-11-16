@@ -9,6 +9,12 @@ export default {
             await context.pool.query(`
                 SELECT *
                 FROM ${STORED_PROC.getMembers}()
-            `).then(result => result.rows || [])
+            `).then(result => result.rows || []),
+        member: async (parent, args: { id: string }, context: TContext, info) =>
+            checkAuthorization(context) &&
+            await context.pool.query(`
+                SELECT *
+                FROM ${STORED_PROC.getMember}(${args.id})
+            `).then(result => result.rows[0] || {}),
     }
 }
