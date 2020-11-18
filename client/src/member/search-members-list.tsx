@@ -2,31 +2,40 @@ import { gql, useQuery } from '@apollo/client'
 import React, { useState } from 'react'
 import { firstBy } from 'thenby'
 import { t, T } from 'translations/translate'
-import { membersSearchQuery } from './__generated__/membersSearchQuery'
+import { SearchMembersItem, SEARCH_MEMBERS_ITEM_FRAGMENT } from './search-members-item'
 
 import './search-members-list.scss'
-import { SearchMembersItem } from './search-members-item'
+import { searchMemberQuery } from './__generated__/searchMemberQuery'
 
-const MEMBERS_SEARCH_QUERY = gql`
-    query membersSearchQuery {
-        members {
-            id
-            english_given_name
-            english_surname
-            chinese_given_name
-            chinese_surname
-            inactive
-        }
+export const MEMBERS_SEARCH_FRAGMENT = gql`
+    fragment searchMembersFragment on Member {
+        id
+        english_given_name
+        english_surname
+        chinese_given_name
+        chinese_surname
+        inactive
+        ...searchMembersItemFragment
     }
+    ${SEARCH_MEMBERS_ITEM_FRAGMENT}
 `
 
-type TLowerCaseMemberNames = membersSearchQuery['members'][number] & {
+const MEMBERS_SEARCH_QUERY = gql`
+    query searchMemberQuery {
+        members {
+            ...searchMembersFragment
+        }
+    }
+    ${MEMBERS_SEARCH_FRAGMENT}
+`
+
+type TLowerCaseMemberNames = searchMemberQuery['members'][number] & {
     lower_case_english_given_name: string
     lower_case_english_surname: string
 }
 
 export const SearchMembersList = ({ itemRenderer }: { itemRenderer: (props: { id: string }) => JSX.Element }) => {
-    const { loading, data } = useQuery<membersSearchQuery>(MEMBERS_SEARCH_QUERY)
+    const { loading, data } = useQuery<searchMemberQuery>(MEMBERS_SEARCH_QUERY)
     const [searchString, setSearchString] = useState('')
     const [includeInactive, setIncludeInactive] = useState(false)
 

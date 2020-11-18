@@ -19,5 +19,5 @@
     "password:new-password": "請輸入新的密碼",
     "password:update-password": "更新密碼",
     "search-members:include-inactive": "搜尋包括不常來信徒",
-    "search-members:search-placeholder": "搜尋中英姓名"
+    "search-members:search-placeholder": "搜尋姓名"
 }

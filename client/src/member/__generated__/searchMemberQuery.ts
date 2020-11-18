@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: membersSearchQuery
+// GraphQL query operation: searchMemberQuery
 // ====================================================
 
-export interface membersSearchQuery_members {
+export interface searchMemberQuery_members {
   __typename: "Member";
   id: string;
   english_given_name: string;
@@ -20,6 +20,6 @@ export interface membersSearchQuery_members {
   inactive: boolean | null;
 }
 
-export interface membersSearchQuery {
-  members: membersSearchQuery_members[];
+export interface searchMemberQuery {
+  members: searchMemberQuery_members[];
 }

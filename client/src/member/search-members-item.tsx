@@ -5,7 +5,7 @@ import { searchMembersItemFragment } from './__generated__/searchMembersItemFrag
 
 import './search-members-item.scss'
 
-const SEARCH_MEMBERS_ITEM_FRAGMENT = gql`
+export const SEARCH_MEMBERS_ITEM_FRAGMENT = gql`
     fragment searchMembersItemFragment on Member {
         english_given_name
         english_surname

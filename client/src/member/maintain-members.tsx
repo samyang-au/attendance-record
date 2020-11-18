@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import React, { useState } from 'react'
-import { SearchMembersList } from './search-members-list'
+import { MEMBERS_SEARCH_FRAGMENT, SearchMembersList } from './search-members-list'
 import { membersQuery } from './__generated__/membersQuery'
 
 import './maintain-members.scss'
@@ -9,20 +9,10 @@ const MEMBERS_QUERY = gql`
     query membersQuery {
         members {
             id
-            english_given_name
-            english_surname
-            chinese_given_name
-            chinese_surname
-            alias
-            email
-            inactive
-            notes
-            groups {
-                id
-                name
-            }
+            ...searchMembersFragment
         }
     }
+    ${MEMBERS_SEARCH_FRAGMENT}
 `
 
 export const MaintainMembers = () => {

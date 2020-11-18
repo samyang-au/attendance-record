@@ -19,5 +19,5 @@
     "password:new-password": "Please enter new password",
     "password:update-password": "Update Password",
     "search-members:include-inactive": "Include Inactive",
-    "search-members:search-placeholder": "Search Chinese/English names"
+    "search-members:search-placeholder": "Search names"
 }

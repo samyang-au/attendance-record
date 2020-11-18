@@ -39,7 +39,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "schema": "apollo schema:download -k --endpoint=https://localhost:433/graphql graphql-schema.json",
-    "codegen": "apollo client:codegen --target=typescript",
+    "codegen": "rm -rf `find . -type d -name __generated__` && apollo client:codegen --target=typescript",
     "postinstall": "patch-package"
   },
   "eslintConfig": {

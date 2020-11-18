@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: membersQuery
+// GraphQL fragment: searchMembersFragment
 // ====================================================
 
-export interface membersQuery_members {
+export interface searchMembersFragment {
   __typename: "Member";
   id: string;
   english_given_name: string;
@@ -18,8 +18,4 @@ export interface membersQuery_members {
    * address: Address
    */
   inactive: boolean | null;
-}
-
-export interface membersQuery {
-  members: membersQuery_members[];
 }
