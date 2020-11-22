@@ -1,0 +1,48 @@
+.maintain-members-detail {
+    .fields {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 10px;
+        align-items: center;
+    
+        & > input, & > textarea, & > select {
+            margin: 0;
+            min-width: 120px;
+        }
+    
+        .inactive-checkbox {
+            min-width: unset;
+        }
+    
+        .notes-input {
+            height: 80px;
+        }
+    
+        .groups-container {
+            display: grid;
+            grid-template-columns: 30px 1fr;
+            align-items: center;
+    
+            & > input {
+                margin: 0;
+            }
+        }
+    }
+
+    .button-container {
+        display: flex;
+
+        button {
+            flex: 1;
+        }
+    }
+
+    .reset-password-container {
+        display: flex;
+        border-top: 1px solid lightgrey;
+        
+        .reset-password-button {
+            flex: 1;
+        }
+    }
+}

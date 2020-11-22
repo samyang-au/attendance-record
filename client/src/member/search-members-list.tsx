@@ -34,7 +34,7 @@ type TLowerCaseMemberNames = searchMemberQuery['members'][number] & {
     lower_case_english_surname: string
 }
 
-export const SearchMembersList = ({ itemRenderer }: { itemRenderer: (props: { id: string }) => JSX.Element }) => {
+export const SearchMembersList = ({ itemRenderer }: { itemRenderer: (props: { id: string }) => (JSX.Element | null) }) => {
     const { loading, data } = useQuery<searchMemberQuery>(MEMBERS_SEARCH_QUERY)
     const [searchString, setSearchString] = useState('')
     const [includeInactive, setIncludeInactive] = useState(false)

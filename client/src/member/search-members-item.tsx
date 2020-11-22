@@ -16,7 +16,7 @@ export const SEARCH_MEMBERS_ITEM_FRAGMENT = gql`
 
 type TProps = {
     id: string,
-    itemRenderer: (props: { id: string }) => JSX.Element
+    itemRenderer: (props: { id: string }) => (JSX.Element | null)
 }
 
 export const SearchMembersItem = ({ id, itemRenderer: ItemRenderer }: TProps) => {
@@ -42,14 +42,14 @@ export const SearchMembersItem = ({ id, itemRenderer: ItemRenderer }: TProps) =>
     return (
         <div className={"search-members-item " + (ExpandStateEnum[expandState])}>
             <div className="border">
-                <div className="title">
+                <div className="title" onClick={expandState === ExpandStateEnum.Collapsed ? onExpand : onCollapse}>
                     <div className="english-name">
                         {`${data.english_given_name} ${data.english_surname}`}
                     </div>
                     <div className="chinese-name">
                         {`${data.chinese_surname}${data.chinese_given_name}`}
                     </div>
-                    <div className="expand-toggle" onClick={expandState === ExpandStateEnum.Collapsed ? onExpand : onCollapse} />
+                    <div className="expand-toggle" />
                 </div>
                 {expandState === ExpandStateEnum.Expanded &&
                     <div className="item-container">

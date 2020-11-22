@@ -10,6 +10,24 @@ $toggle-icon-border: 2px solid black;
         border: 1px solid grey;
         border-radius: 5px;
     
+        .expand-toggle {
+            display: inline-block;
+            text-align: center;
+            width: $toggle-size;
+            height: $toggle-size;
+
+            &::before {
+                content: '';
+                position: relative;
+                display: inline-block;
+                margin-left: auto;
+                width: $toggle-icon-size;
+                height: $toggle-icon-size;
+                border-left: $toggle-icon-border;
+                border-bottom: $toggle-icon-border;
+            }
+        }
+    
         .title {
             display: flex;
 
@@ -20,48 +38,30 @@ $toggle-icon-border: 2px solid black;
             .chinese-name {
                 width: 65px;
             }
-
-            .expand-toggle {
-                display: inline-block;
-                text-align: center;
-                width: $toggle-size;
-                height: $toggle-size;
-
-                &::before {
-                    content: '';
-                    position: relative;
-                    display: inline-block;
-                    margin-left: auto;
-                    width: $toggle-icon-size;
-                    height: $toggle-icon-size;
-                    border-left: $toggle-icon-border;
-                    border-bottom: $toggle-icon-border;
-                }
-            }
         }
 
         .item-container {
             border-top: 1px solid lightgrey;
             margin-top: 10px;
-            padding-top: 5px;
+            padding-top: 10px;
         }
     }
 
     &.Collapsed {
-        .title {
-            .expand-toggle::before {
-                margin-bottom: 3px;
-                transform: rotate(-45deg);
-            }
+        .expand-toggle::before {
+            margin-bottom: 3px;
+            transform: rotate(-45deg);
+        }
+
+        .footer {
+            display: none;
         }
     }
 
     &.Expanded {
-        .title {
-            .expand-toggle::before {
-                margin-top: 8px;
-                transform: rotate(-225deg);
-            }
+        .expand-toggle::before {
+            margin-top: 8px;
+            transform: rotate(-225deg);
         }
     }
 }

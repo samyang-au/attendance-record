@@ -1,15 +1,14 @@
 input MemberInput {
-    english_given_name: String
-    english_surname: String
-    chinese_given_name: String
-    chinese_surname: String
-    alias: String
-    email: String
-    user_name: String
-    password: String
-    password_reset_required: Boolean
-    legacy_id: String
-    gender: Gender
-    member_type: ID
-    inactive: Boolean
+    english_given_name: String!
+    english_surname: String!
+    chinese_given_name: String!
+    chinese_surname: String!
+    alias: String!
+    email: String!
+    user_name: String!
+    gender: Gender!
+    member_type: ID!
+    inactive: Boolean!
+    notes: String!
+    groups: [String!]!
 }

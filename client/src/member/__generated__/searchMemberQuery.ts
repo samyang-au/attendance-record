@@ -14,9 +14,6 @@ export interface searchMemberQuery_members {
   english_surname: string;
   chinese_given_name: string;
   chinese_surname: string;
-  /**
-   * address: Address
-   */
   inactive: boolean | null;
 }
 

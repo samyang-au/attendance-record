@@ -6,12 +6,13 @@ html, body, #root, .app {
     display: flex;
     font-size: 20px;
     
-    button, input {
+    button, input, textarea, select {
         margin: 10px;
         height: 30px;
         font-size: 20px;
         padding-left: 10px;
         padding-right: 10px;
+        resize: none;
     }
 
     .loader {

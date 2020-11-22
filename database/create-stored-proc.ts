@@ -24,7 +24,7 @@ export async function createStoredProc(dbClient: Client) {
 
     await createProc(
         'getUserLogin',
-        'IN "userName" character varying',
+        'IN "_user_name" character varying',
         `
             TABLE(
                 id smallint,
@@ -36,13 +36,13 @@ export async function createStoredProc(dbClient: Client) {
             RETURN QUERY
             SELECT m.id, m.password_hash, m.password_reset_required
             FROM "${SCHEMA}"."member" m
-            WHERE m.user_name = "userName";
+            WHERE m.user_name = "_user_name";
         `
     )
 
     await createProc(
         'getUserGroup',
-        'IN "userId" int',
+        'IN "_user_id" int',
         `
             TABLE(
                 id smallint,
@@ -54,7 +54,7 @@ export async function createStoredProc(dbClient: Client) {
             SELECT g.id, g.name
             FROM "attendance-record"."group_member" gm
                 LEFT JOIN "attendance-record"."group" g ON gm.group_id = g.id
-            WHERE gm.member_id = "userId"
+            WHERE gm.member_id = "_user_id"
                 AND gm.end_date IS NULL
                 AND g.end_date IS NULL
                 AND g.parent_id IS NULL;
@@ -63,20 +63,20 @@ export async function createStoredProc(dbClient: Client) {
 
     await createProc(
         'updatePassword',
-        'IN "userId" int, IN "passwordHash" text',
+        'IN "_user_id" int, IN "_password_hash" text',
         `
             VOID
         `,
         `
             UPDATE "${SCHEMA}"."member"
-            SET password_hash = "passwordHash", password_reset_required = false
-            WHERE id = "userId";
+            SET password_hash = "_password_hash", password_reset_required = false
+            WHERE id = "_user_id";
         `,
     )
 
     await createProc(
         'getMember',
-        'IN "memberId" int',
+        'IN "_member_id" int',
         `
             TABLE(
                 id smallint,
@@ -111,7 +111,7 @@ export async function createStoredProc(dbClient: Client) {
                 m.inactive,
                 m.notes
             FROM "${SCHEMA}"."member" m
-            WHERE m.id = "memberId";
+            WHERE m.id = "_member_id";
         `,
     )
 
@@ -158,7 +158,7 @@ export async function createStoredProc(dbClient: Client) {
 
     await createProc(
         'getMemberType',
-        'IN "memberTypeId" int',
+        'IN "_member_type_id" int',
         `
             TABLE(
                 id smallint,
@@ -171,7 +171,88 @@ export async function createStoredProc(dbClient: Client) {
                 mt.id,
                 mt.name
             FROM "${SCHEMA}"."member_type" mt
-            WHERE mt.id = "memberTypeId";
+            WHERE mt.id = "_member_type_id";
+        `,
+    )
+
+    await createProc(
+        'getMemberTypes',
+        '',
+        `
+            TABLE(
+                id smallint,
+                name varchar(20)
+            )
+        `,
+        `
+            RETURN QUERY
+            SELECT
+                mt.id,
+                mt.name
+            FROM "${SCHEMA}"."member_type" mt;
+        `,
+    )
+
+    await createProc(
+        'updateMember',
+        `
+            IN "_user_id" int,
+            IN "_english_given_name" text,
+            IN "_english_surname" text,
+            IN "_chinese_given_name" text,
+            IN "_chinese_surname" text,
+            IN "_alias" text,
+            IN "_email" text,
+            IN "_user_name" varchar(50),
+            IN "_gender" character(1),
+            IN "_member_type_id" smallint,
+            IN "_inactive" boolean,
+            IN "_notes" text
+        `,
+        `
+            TABLE(
+                id smallint,
+                english_given_name text,
+                english_surname text,
+                chinese_given_name text,
+                chinese_surname text,
+                alias text,
+                email text,
+                user_name varchar(50),
+                gender character(1),
+                member_type_id smallint,
+                inactive boolean,
+                notes text
+            )
+        `,
+        `
+            RETURN QUERY UPDATE "${SCHEMA}"."member" m
+            SET
+                english_given_name = "_english_given_name",
+                english_surname = "_english_surname",
+                chinese_given_name = "_chinese_given_name",
+                chinese_surname = "_chinese_surname",
+                alias = "_alias",
+                email = "_email",
+                user_name = "_user_name",
+                gender = "_gender",
+                member_type_id = "_member_type_id",
+                inactive = "_inactive",
+                notes = "_notes"
+            WHERE m.id = "_user_id"
+            RETURNING
+                m.id,
+                m.english_given_name,
+                m.english_surname,
+                m.chinese_given_name,
+                m.chinese_surname,
+                m.alias,
+                m.email,
+                m.user_name,
+                m.gender,
+                m.member_type_id,
+                m.inactive,
+                m.notes;
         `,
     )
 }

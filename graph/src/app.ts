@@ -22,7 +22,7 @@ export const app = () => {
         typeDefs,
         resolvers,
         context: ({ req }): TContext => {
-            // console.log(req)
+            // console.log(req.body)
             return ({
                 pool,
                 user: verifyAndDecode(req.headers.authorization)
@@ -38,8 +38,8 @@ export const app = () => {
         cert: fs.readFileSync('./server.crt'),
     }, expressApp)
 
-    server.listen({ port: 433 })
-    console.log('listening to port 433')
+    server.listen({ port: 443 })
+    console.log('listening to port 443')
 
     process.on('SIGTERM', () => {
         console.log('SIGTERM signal received: closing HTTP server')

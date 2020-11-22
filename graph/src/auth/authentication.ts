@@ -29,6 +29,5 @@ export const verifyAndDecode = (authHeader?: string): TokenContent | undefined =
             throw Unauthorized
         }
     }
-
     return undefined
 }

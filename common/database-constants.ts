@@ -13,5 +13,7 @@ export const STORED_PROC = createStoredProcString([
     'updatePassword',
     'getMember',
     'getMembers',
-    'getMemberType'
+    'getMemberType',
+    'getMemberTypes',
+    'updateMember'
 ])
