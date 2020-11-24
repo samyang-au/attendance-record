@@ -48,6 +48,10 @@ export async function seedDatabase(dbClient: Client) {
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
+        VALUES ('${CORE_GROUP.AttendanceGrouping}', '2020-1-1')
+    `)
+    await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.Family}', '2020-1-1')
     `)
     await dbClient.query(`

@@ -21,19 +21,11 @@ export async function createExpressUser(dbClient: Client) {
         GRANT USAGE ON SCHEMA "${SCHEMA}" TO "${securityDefinerRole}"
     `)
     await dbClient.query(`
-        GRANT SELECT ON ALL TABLES
+        GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES
         IN SCHEMA "${SCHEMA}" TO "${securityDefinerRole}"
     `)
     await dbClient.query(`
-        GRANT INSERT ON ALL TABLES
-        IN SCHEMA "${SCHEMA}" TO "${securityDefinerRole}"
-    `)
-    await dbClient.query(`
-        GRANT UPDATE ON ALL TABLES
-        IN SCHEMA "${SCHEMA}" TO "${securityDefinerRole}"
-    `)
-    await dbClient.query(`
-        GRANT DELETE ON ALL TABLES
+        GRANT USAGE, SELECT ON ALL SEQUENCES
         IN SCHEMA "${SCHEMA}" TO "${securityDefinerRole}"
     `)
 

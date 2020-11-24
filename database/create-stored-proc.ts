@@ -4,6 +4,7 @@ import { securityDefinerRole } from "./create-express-user";
 
 export async function createStoredProc(dbClient: Client) {
     const createProc = async (storedProcName: keyof typeof STORED_PROC, params: string, returnBlock: string, bodyBlock: string) =>
+        console.log(`create ${storedProcName}`) as unknown ||
         await dbClient.query(`
             CREATE FUNCTION ${STORED_PROC[storedProcName]}(${params})
                 RETURNS ${returnBlock}
@@ -58,6 +59,33 @@ export async function createStoredProc(dbClient: Client) {
                 AND gm.end_date IS NULL
                 AND g.end_date IS NULL
                 AND g.parent_id IS NULL;
+        `
+    )
+
+    await createProc(
+        'insertUserGroup',
+        'IN "_group_name" character varying, IN "_member_id" int, OUT ret_id int',
+        `
+            int
+        `,
+        `
+            INSERT INTO "${SCHEMA}"."group_member" (group_id, member_id, start_date)
+            SELECT g.id, "_member_id", NOW()
+            FROM "${SCHEMA}"."group" g
+            WHERE g.name = "_group_name"
+            RETURNING id INTO ret_id;
+        `
+    )
+
+    await createProc(
+        'deleteUserGroup',
+        'IN "_group_id" int, IN "_member_id" int',
+        `
+            VOID
+        `,
+        `
+            DELETE FROM "${SCHEMA}"."group_member"
+            WHERE group_id = "_group_id" AND member_id = "_member_id";
         `
     )
 
@@ -226,7 +254,8 @@ export async function createStoredProc(dbClient: Client) {
             )
         `,
         `
-            RETURN QUERY UPDATE "${SCHEMA}"."member" m
+            RETURN QUERY
+            UPDATE "${SCHEMA}"."member" m
             SET
                 english_given_name = "_english_given_name",
                 english_surname = "_english_surname",
