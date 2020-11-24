@@ -1,10 +1,16 @@
-export const CORE_GROUP = {
-    Admin: 'Admin',
-    Committee: 'Committee',
-    CookingGroup: 'Cooking Group',
-    AttendanceGrouping: 'Attendance Grouping',
-    AttendanceFiltering: 'Attendance Filtering',
-    Family: 'Family',
-    RE: 'RE',
-    Usher: 'Usher',
-}
+const createGroup = <T extends string[]>(...data: T): { [K in T[number]]: K } =>
+    data.reduce((result, current) => {
+        result[current] = current
+        return result
+    }, {}) as { [K in T[number]]: K }
+
+export const CORE_GROUP = createGroup(
+    'Admin',
+    'AttendanceFiltering',
+    'AttendanceGrouping',
+    'Committee',
+    'CookingGroup',
+    'Family',
+    'RE',
+    'Usher',
+)

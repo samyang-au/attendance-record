@@ -4,6 +4,7 @@ import { hash, verify } from 'argon2'
 import { createToken } from "../../auth/authentication";
 import { checkAuthorization } from "../../auth/authorization";
 import { passwordComplexityCheck } from '../../../../common/password-complexity'
+import { CORE_GROUP } from "../../../../common/core-groups";
 
 export default {
     Mutation: {
@@ -51,6 +52,18 @@ export default {
             `)
 
             return []
+        },
+        resetPassword: async (parent, { userName, password }: { userName: string, password: string }, context: TContext, info) => {
+            checkAuthorization(context, CORE_GROUP.Admin)
+
+            const passwordHash = await hash(password)
+
+            await context.pool.query(`
+                SELECT 1
+                FROM ${STORED_PROC.resetPassword}('${userName}', '${passwordHash}')
+            `)
+
+            return true
         }
     }
 }

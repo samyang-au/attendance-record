@@ -11,6 +11,8 @@ let privateToken = ''
 export const tokenVar = (token?: string) => {
     if (token !== undefined) {
         localStorage.setItem(TOKEN, token)
+        privateToken = token
+        tokenExpiry = -1 // reload all data
     }
 
     if(tokenExpiry === -1) {
@@ -34,6 +36,7 @@ export const tokenVar = (token?: string) => {
         privateToken = ''
         return ''
     }
+    console.log(privateToken)
 
     return privateToken
 }

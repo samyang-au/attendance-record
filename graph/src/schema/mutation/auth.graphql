@@ -1,5 +1,5 @@
 type Mutation {
     login(userName: String, password: String): Login
     updatePassword(password: String!): [String]!
-    resetPassword(userName: String!, password: String!): Member!
+    resetPassword(userName: String!, password: String!): Boolean!
 }

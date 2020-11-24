@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import { t, T, TranslationKey } from 'translations/translate'
 import { Gender, MemberInput } from '../../__generated__/globalTypes'
 import { maintainMembersDetailMutation, maintainMembersDetailMutationVariables } from './__generated__/maintainMembersDetailMutation'
+import { maintainMembersDetailQuery, maintainMembersDetailQueryVariables } from './__generated__/maintainMembersDetailQuery'
+import { resetPasswordMutation, resetPasswordMutationVariables } from './__generated__/resetPasswordMutation'
 
 import './maintain-members-detail.scss'
-import { maintainMembersDetailQuery, maintainMembersDetailQueryVariables } from './__generated__/maintainMembersDetailQuery'
 
 const MAINTAIN_MEMBERS_DETAIL_FRAGMENT = gql`
     fragment maintainMembersDetailFragment on Member {
@@ -54,16 +55,24 @@ const MAINTAIN_MEMBERS_DETAIL_MUTATION = gql`
     ${MAINTAIN_MEMBERS_DETAIL_FRAGMENT}
 `
 
+const RESET_PASSWORD_MUTATION = gql`
+    mutation resetPasswordMutation($userName: String!, $password: String!) {
+        resetPassword(userName: $userName, password: $password)
+    }
+`
+
 export const MaintainMembersDetail = ({ id }: { id: string }) => {
     const { data, loading } = useQuery<maintainMembersDetailQuery, maintainMembersDetailQueryVariables>(MAINTAIN_MEMBERS_DETAIL_QUERY, {
         variables: { id },
         fetchPolicy: 'network-only'
     })
     const [updateMember] = useMutation<maintainMembersDetailMutation, maintainMembersDetailMutationVariables>(MAINTAIN_MEMBERS_DETAIL_MUTATION)
+    const [resetPassword] = useMutation<resetPasswordMutation, resetPasswordMutationVariables>(RESET_PASSWORD_MUTATION)
     const [memberDetail, setMemberDetail] = useState<MemberInput>()
     const [adminGroup, setAdminGroup] = useState(false)
     const [usherGroup, setUsherGroup] = useState(false)
     const [changed, setChanged] = useState(false)
+    const [resettedPassword, setResettedPassword] = useState<string | null>(null)
 
     if (loading) {
         return <div className="loader" />
@@ -215,6 +224,17 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
         setChanged(false)
     }
 
+    const onResetPassword = () => {
+        const password = `Password${[1, 2, 3, 4].map(() => Math.floor(Math.random() * 10)).join('')}!`
+        setResettedPassword(password)
+        resetPassword({
+            variables: {
+                userName: memberDetail!.user_name,
+                password
+            }
+        })
+    }
+
     return (
         <div className="maintain-members-detail">
             <div className="fields">
@@ -231,7 +251,7 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
                 <T className="email-label" k="member-detail:email" />
                 <input className="email-input" value={memberDetail?.email || ''} onChange={onEmailChange} />
                 <T className="user-name-label" k="member-detail:user-name" />
-                <input className="user-name-input" value={memberDetail?.user_name || ''} onChange={onUserNameChange} />
+                <input disabled className="user-name-input" value={memberDetail?.user_name || ''} onChange={onUserNameChange} />
                 <T className="gender" k="member-detail:gender" />
                 <select onChange={onGenderChange} value={memberDetail?.gender!}>
                     <option value="M">{t('gender:male')}</option>
@@ -266,7 +286,8 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
                 <button disabled={!changed} className="save-button" onClick={onSave}><T k="member-detail:save-button" /></button>
             </div>
             <div className="reset-password-container">
-                <button className="reset-password-button"><T k="member-detail:reset-password-button" /></button>
+                <button className="reset-password-button" onClick={onResetPassword}><T k="member-detail:reset-password-button" /></button>
+                {resettedPassword}
             </div>
         </div>
     )

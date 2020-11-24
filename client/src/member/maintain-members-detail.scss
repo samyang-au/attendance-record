@@ -40,9 +40,14 @@
     .reset-password-container {
         display: flex;
         border-top: 1px solid lightgrey;
+        flex-direction: column;
+        padding-left: 10px;
+        padding-right: 10px;
         
         .reset-password-button {
             flex: 1;
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 }

@@ -103,6 +103,19 @@ export async function createStoredProc(dbClient: Client) {
     )
 
     await createProc(
+        'resetPassword',
+        'IN "_user_name" character varying, IN "_password_hash" text',
+        `
+            VOID
+        `,
+        `
+            UPDATE "${SCHEMA}"."member"
+            SET password_hash = "_password_hash", password_reset_required = true
+            WHERE user_name = "_user_name";
+        `,
+    )
+
+    await createProc(
         'getMember',
         'IN "_member_id" int',
         `

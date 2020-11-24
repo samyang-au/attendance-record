@@ -25,10 +25,11 @@ export const SideMenu = () => {
     }
 
     const onLogout = () => {
+        history.push(ROUTE_LOGIN)
+        client.cache.reset()
         tokenVar('')
         userIdVar('')
-        client.resetStore()
-        history.push(ROUTE_LOGIN)
+        userGroupsVar([])
     }
 
     return (
