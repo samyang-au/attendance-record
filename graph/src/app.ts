@@ -34,8 +34,8 @@ export const app = () => {
     apollo.applyMiddleware({ app: expressApp })
 
     const server = https.createServer({
-        key: fs.readFileSync('./server.key'),
-        cert: fs.readFileSync('./server.crt'),
+        key: process.env.env === "prod" ? fs.readFileSync('./privkey.pem', 'utf8') : fs.readFileSync('./server.key'),
+        cert: process.env.env === "prod" ? fs.readFileSync('./cert.pem', 'utf8') : fs.readFileSync('./server.crt'),
     }, expressApp)
 
     server.listen({ port: 443 })

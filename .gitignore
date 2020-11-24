@@ -26,4 +26,5 @@ yarn-error.log*
 *.prod.csv
 rootCA.*
 server.*
+*.pem
 v3.ext
