@@ -36,7 +36,6 @@ export const tokenVar = (token?: string) => {
         privateToken = ''
         return ''
     }
-    console.log(privateToken)
 
     return privateToken
 }
