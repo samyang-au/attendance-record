@@ -1,6 +1,0 @@
-type RecordField {
-    id: ID!
-    record: Record!
-    name: String!
-    value: String!
-}

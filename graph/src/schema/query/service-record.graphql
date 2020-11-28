@@ -1,0 +1,3 @@
+type Query {
+    serviceRecord(key: String!): ServiceRecord
+}

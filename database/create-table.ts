@@ -89,6 +89,7 @@ export async function createTable(dbClient: Client) {
             (
                 id smallserial,
                 name varchar(30),
+                is_security_group boolean,
                 start_date date NOT NULL,
                 end_date date,
                 parent_id smallint,
@@ -123,71 +124,55 @@ export async function createTable(dbClient: Client) {
                 OWNER to postgres;
         `)
 
-    console.log('create record table')
+    console.log('create service_record table')
     await dbClient.query(`
-            CREATE TABLE "${SCHEMA}"."record"
+            CREATE TABLE "${SCHEMA}"."service_record"
             (
                 id smallserial,
-                group_id smallint NOT NULL,
+                key text UNIQUE NOT NULL,
                 date date NOT NULL,
+                startTime varchar(8),
+                endTime varchar(8),
+                usher1 smallint,
+                usher2 smallint,
+                topic text,
+                hymn text,
+                sermon_speaker smallint,
+                interpreter smallint,
+                hymnalLeader smallint,
+                note text,
                 PRIMARY KEY (id),
-                CONSTRAINT group_id_constraint FOREIGN KEY (group_id)
-                    REFERENCES "${SCHEMA}".group (id) MATCH SIMPLE
+                CONSTRAINT usher1_constraint FOREIGN KEY (usher1)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE,
+                CONSTRAINT usher2_constraint FOREIGN KEY (usher2)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE,
+                CONSTRAINT sermon_speaker_constraint FOREIGN KEY (sermon_speaker)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE,
+                CONSTRAINT interpreter_constraint FOREIGN KEY (interpreter)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE,
+                CONSTRAINT hymnalLeader_constraint FOREIGN KEY (hymnalLeader)
+                    REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE
             );
 
-            ALTER TABLE "${SCHEMA}"."record"
+            ALTER TABLE "${SCHEMA}"."service_record"
                 OWNER to postgres;
         `)
 
-    console.log('create record field table')
+    console.log('create service_attendance table')
     await dbClient.query(`
-            CREATE TABLE "${SCHEMA}"."record_field"
+            CREATE TABLE "${SCHEMA}"."service_attendance"
             (
-                id smallserial,
-                record_id smallint NOT NULL,
-                name text NOT NULL,
-                value text NOT NULL,
-                PRIMARY KEY (id),
-                CONSTRAINT record_id_constraint FOREIGN KEY (record_id)
-                    REFERENCES "${SCHEMA}".record (id) MATCH SIMPLE
-            );
-
-            ALTER TABLE "${SCHEMA}"."record_field"
-                OWNER to postgres;
-        `)
-
-    console.log('create attendance table')
-    await dbClient.query(`
-            CREATE TABLE "${SCHEMA}"."attendance"
-            (
-                id smallserial,
-                record_id smallint NOT NULL,
+                id serial,
+                service_record_id smallint NOT NULL,
                 member_id smallint NOT NULL,
                 PRIMARY KEY (id),
-                CONSTRAINT record_id_constraint FOREIGN KEY (record_id)
-                    REFERENCES "${SCHEMA}".record (id) MATCH SIMPLE,
+                CONSTRAINT service_record_id_constraint FOREIGN KEY (service_record_id)
+                    REFERENCES "${SCHEMA}".service_record (id) MATCH SIMPLE,
                 CONSTRAINT member_id_constraint FOREIGN KEY (member_id)
                     REFERENCES "${SCHEMA}".member (id) MATCH SIMPLE
             );
 
-            ALTER TABLE "${SCHEMA}"."attendance"
-                OWNER to postgres;
-        `)
-
-    console.log('create offering table')
-    await dbClient.query(`
-            CREATE TABLE "${SCHEMA}"."offering"
-            (
-                id smallserial,
-                group_id smallint NOT NULL,
-                date date NOT NULL,
-                amount money NOT NULL,
-                PRIMARY KEY (id),
-                CONSTRAINT group_id_constraint FOREIGN KEY (group_id)
-                    REFERENCES "${SCHEMA}".group (id) MATCH SIMPLE
-            );
-
-            ALTER TABLE "${SCHEMA}"."offering"
+            ALTER TABLE "${SCHEMA}"."service_attendance"
                 OWNER to postgres;
         `)
 }

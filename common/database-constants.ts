@@ -8,14 +8,18 @@ const createStoredProcString = <T extends string>(names: T[]): Record<T, string>
     }, {} as Record<T, string>)
 
 export const STORED_PROC = createStoredProcString([
-    'deleteUserGroup',
+    'deleteMemberGroup',
+    'getAttendanceGroup',
+    'getFamily',
+    'getGroup',
+    'getGroupMembers',
     'getMember',
     'getMembers',
     'getMemberType',
     'getMemberTypes',
-    'getUserGroup',
+    'getSecurityGroup',
     'getUserLogin',
-    'insertUserGroup',
+    'insertMemberGroup',
     'resetPassword',
     'updateMember',
     'updatePassword',

@@ -10,5 +10,5 @@ input MemberInput {
     member_type: ID!
     inactive: Boolean!
     notes: String!
-    groups: [String!]!
+    security_groups: [String!]!
 }

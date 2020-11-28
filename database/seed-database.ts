@@ -30,25 +30,25 @@ export async function seedDatabase(dbClient: Client) {
 
     console.log('create groups')
     const adminGroupId = await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (name, start_date)
-        VALUES ('${CORE_GROUP.Admin}', '2020-1-1')
+        INSERT INTO "${SCHEMA}"."group" (name, start_date, is_security_group)
+        VALUES ('${CORE_GROUP.Admin}', '2020-1-1', true)
         RETURNING id
     `).then(result => result.rows[0].id)
+    await dbClient.query(`
+        INSERT INTO "${SCHEMA}"."group" (name, start_date, is_security_group)
+        VALUES ('${CORE_GROUP.Usher}', '2020-1-1', true)
+    `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.Committee}', '2020-1-1')
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
-        VALUES ('${CORE_GROUP.CookingGroup}', '2020-1-1')
-    `)
-    await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.AttendanceGrouping}', '2020-1-1')
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
-        VALUES ('${CORE_GROUP.AttendanceGrouping}', '2020-1-1')
+        VALUES ('${CORE_GROUP.AttendanceFiltering}', '2020-1-1')
     `)
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
@@ -57,10 +57,6 @@ export async function seedDatabase(dbClient: Client) {
     await dbClient.query(`
         INSERT INTO "${SCHEMA}"."group" (name, start_date)
         VALUES ('${CORE_GROUP.RE}', '2020-1-1')
-    `)
-    await dbClient.query(`
-        INSERT INTO "${SCHEMA}"."group" (name, start_date)
-        VALUES ('${CORE_GROUP.Usher}', '2020-1-1')
     `)
 
     console.log('creat admin user')

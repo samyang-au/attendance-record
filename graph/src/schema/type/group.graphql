@@ -5,4 +5,5 @@ type Group {
     end_date: String
     parent: Group
     order_id: Int
+    group_members: [GroupMember]!
 }

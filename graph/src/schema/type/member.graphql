@@ -12,5 +12,7 @@ type Member {
     # address: Address
     inactive: Boolean
     notes: String
-    groups: [Group]
+    security_groups: [Group]!
+    family: [Member]!
+    attendance_group: [Member]! 
 }

@@ -1,0 +1,15 @@
+type ServiceRecord {
+    id: ID!
+    date: String!
+    start_time: String
+    end_time: String
+    usher1: Member
+    usher2: Member
+    topic: String
+    hymn: String
+    sermon_speaker: Member
+    interpreter: Member
+    hymnal_leader: Member
+    note: String
+    attendees: [Member]!
+}

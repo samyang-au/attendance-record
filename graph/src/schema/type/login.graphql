@@ -1,5 +1,5 @@
 type Login {
-    id: ID!
+    id: ID
     token: String
     password_reset_required: Boolean
 }

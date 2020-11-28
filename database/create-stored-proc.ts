@@ -2,6 +2,39 @@ import { Client } from "pg";
 import { SCHEMA, STORED_PROC } from "../common/database-constants";
 import { securityDefinerRole } from "./create-express-user";
 
+const RETURN_MEMBER_DATA = `
+    TABLE(
+        id smallint,
+        english_given_name text,
+        english_surname text,
+        chinese_given_name text,
+        chinese_surname text,
+        alias text,
+        email text,
+        user_name varchar(50),
+        gender character(1),
+        member_type_id smallint,
+        address_id smallint,
+        inactive boolean,
+        notes text
+    )
+`
+const MEMBER_COLUMNS = `
+    m.id,
+    COALESCE (m.english_given_name, ''),
+    COALESCE (m.english_surname, ''),
+    COALESCE (m.chinese_given_name, ''),
+    COALESCE (m.chinese_surname, ''),
+    COALESCE (m.alias, ''),
+    m.email,
+    m.user_name,
+    m.gender,
+    m.member_type_id,
+    m.address_id,
+    m.inactive,
+    m.notes
+`
+
 export async function createStoredProc(dbClient: Client) {
     const createProc = async (storedProcName: keyof typeof STORED_PROC, params: string, returnBlock: string, bodyBlock: string) =>
         console.log(`create ${storedProcName}`) as unknown ||
@@ -42,8 +75,8 @@ export async function createStoredProc(dbClient: Client) {
     )
 
     await createProc(
-        'getUserGroup',
-        'IN "_user_id" int',
+        'getSecurityGroup',
+        'IN "_member_id" int',
         `
             TABLE(
                 id smallint,
@@ -53,17 +86,55 @@ export async function createStoredProc(dbClient: Client) {
         `
             RETURN QUERY
             SELECT g.id, g.name
-            FROM "attendance-record"."group_member" gm
-                LEFT JOIN "attendance-record"."group" g ON gm.group_id = g.id
-            WHERE gm.member_id = "_user_id"
+            FROM "${SCHEMA}"."group_member" gm
+                LEFT JOIN "${SCHEMA}"."group" g ON gm.group_id = g.id
+            WHERE gm.member_id = "_member_id"
                 AND gm.end_date IS NULL
                 AND g.end_date IS NULL
-                AND g.parent_id IS NULL;
+                AND g.is_security_group = true;
         `
     )
 
     await createProc(
-        'insertUserGroup',
+        'getFamily',
+        'IN "_member_id" int',
+        RETURN_MEMBER_DATA,
+        `
+            RETURN QUERY
+            SELECT ${MEMBER_COLUMNS}
+            FROM "${SCHEMA}"."group_member" gm
+                LEFT JOIN "${SCHEMA}"."group" gf ON gf.id = gm.group_id
+                LEFT JOIN "${SCHEMA}"."group" gfr ON gfr.id = gf.parent_id
+                LEFT JOIN "${SCHEMA}"."group_member" gms ON gms.group_id = gf.id
+                LEFT JOIN "${SCHEMA}"."member" m ON m.id = gms.member_id
+            WHERE gm.member_id = "_member_id" AND gfr.name = 'Family'
+            ORDER BY gms.order_id;
+        `
+    )
+
+    await createProc(
+        'getAttendanceGroup',
+        'IN "_member_id" int',
+        RETURN_MEMBER_DATA,
+        `
+            RETURN QUERY
+            SELECT ${MEMBER_COLUMNS}
+            FROM "${SCHEMA}"."group_member" gm
+                LEFT JOIN "${SCHEMA}"."group" gf ON gf.id = gm.group_id
+                LEFT JOIN "${SCHEMA}"."group" gfr ON gfr.id = gf.parent_id
+                LEFT JOIN "${SCHEMA}"."group_member" gms ON gms.group_id = gf.id
+                LEFT JOIN "${SCHEMA}"."member" m ON m.id = gms.member_id
+            WHERE gm.member_id = "_member_id"
+                AND gfr.name = 'AttendanceGrouping'
+                AND m.id NOT IN (
+                    SELECT f.id
+                    FROM "${SCHEMA}"."getFamily"("_member_id") f
+                );
+        `
+    )
+
+    await createProc(
+        'insertMemberGroup',
         'IN "_group_name" character varying, IN "_member_id" int, OUT ret_id int',
         `
             int
@@ -78,7 +149,7 @@ export async function createStoredProc(dbClient: Client) {
     )
 
     await createProc(
-        'deleteUserGroup',
+        'deleteMemberGroup',
         'IN "_group_id" int, IN "_member_id" int',
         `
             VOID
@@ -118,39 +189,10 @@ export async function createStoredProc(dbClient: Client) {
     await createProc(
         'getMember',
         'IN "_member_id" int',
-        `
-            TABLE(
-                id smallint,
-                english_given_name text,
-                english_surname text,
-                chinese_given_name text,
-                chinese_surname text,
-                alias text,
-                email text,
-                user_name varchar(50),
-                gender character(1),
-                member_type_id smallint,
-                address_id smallint,
-                inactive boolean,
-                notes text
-            )
-        `,
+        RETURN_MEMBER_DATA,
         `
             RETURN QUERY
-            SELECT
-                m.id,
-                COALESCE (m.english_given_name, ''),
-                COALESCE (m.english_surname, ''),
-                COALESCE (m.chinese_given_name, ''),
-                COALESCE (m.chinese_surname, ''),
-                COALESCE (m.alias, ''),
-                m.email,
-                m.user_name,
-                m.gender,
-                m.member_type_id,
-                m.address_id,
-                m.inactive,
-                m.notes
+            SELECT ${MEMBER_COLUMNS}
             FROM "${SCHEMA}"."member" m
             WHERE m.id = "_member_id";
         `,
@@ -159,39 +201,10 @@ export async function createStoredProc(dbClient: Client) {
     await createProc(
         'getMembers',
         '',
-        `
-            TABLE(
-                id smallint,
-                english_given_name text,
-                english_surname text,
-                chinese_given_name text,
-                chinese_surname text,
-                alias text,
-                email text,
-                user_name varchar(50),
-                gender character(1),
-                member_type_id smallint,
-                address_id smallint,
-                inactive boolean,
-                notes text
-            )
-        `,
+        RETURN_MEMBER_DATA,
         `
             RETURN QUERY
-            SELECT
-                m.id,
-                COALESCE (m.english_given_name, ''),
-                COALESCE (m.english_surname, ''),
-                COALESCE (m.chinese_given_name, ''),
-                COALESCE (m.chinese_surname, ''),
-                COALESCE (m.alias, ''),
-                m.email,
-                m.user_name,
-                m.gender,
-                m.member_type_id,
-                m.address_id,
-                m.inactive,
-                m.notes
+            SELECT ${MEMBER_COLUMNS}
             FROM "${SCHEMA}"."member" m
             WHERE m.deceased = false;
         `,
@@ -296,5 +309,63 @@ export async function createStoredProc(dbClient: Client) {
                 m.inactive,
                 m.notes;
         `,
+    )
+
+    await createProc(
+        'getGroup',
+        `
+            IN "_group_id" int
+        `,
+        `
+            TABLE(
+                id smallint,
+                name varchar(30),
+                start_date date,
+                end_date date,
+                parent_id smallint,
+                order_id smallint
+            )
+        `,
+        `
+            RETURN QUERY
+            SELECT
+                g.id,
+                g.name,
+                g.start_date,
+                g.end_date,
+                g.parent_id,
+                g.order_id
+            FROM "${SCHEMA}"."group" g
+            WHERE g.id = "_group_id";
+        `
+    )
+
+    await createProc(
+        'getGroupMembers',
+        `
+            IN "_group_id" int
+        `,
+        `
+            TABLE(
+                id smallint,
+                group_id smallint,
+                member_id smallint,
+                start_date date,
+                end_date date,
+                order_id smallint
+            )
+        `,
+        `
+            RETURN QUERY
+            SELECT
+                gm.id,
+                gm.group_id,
+                gm.member_id,
+                gm.start_date,
+                gm.end_date,
+                gm.order_id
+            FROM "${SCHEMA}"."group_member" gm
+            WHERE gm.group_id = "_group_id";
+        `
     )
 }

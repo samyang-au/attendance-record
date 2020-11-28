@@ -18,7 +18,7 @@ export default {
             if (password_hash && await verify(password_hash, password)) {
                 const groups: string[] = await context.pool.query(`
                     SELECT *
-                    FROM ${STORED_PROC.getUserGroup}(${id})
+                    FROM ${STORED_PROC.getSecurityGroup}(${id})
                 `).then(result => result.rows.map(row => row.name))
 
                 const token = createToken({

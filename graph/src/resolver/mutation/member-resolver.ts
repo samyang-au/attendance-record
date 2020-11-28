@@ -17,7 +17,7 @@ interface MemberInput {
     member_type: string;
     inactive: boolean;
     notes: string;
-    groups: string[];
+    security_groups: string[];
 }
 
 export default {
@@ -34,11 +34,11 @@ export default {
                 // TODO: remove this once maintain groups is implemented
                 const currentGroups: { id: string, name: string }[] = await client.query(`
                     SELECT *
-                    FROM ${STORED_PROC.getUserGroup}(${id})
+                    FROM ${STORED_PROC.getSecurityGroup}(${id})
                 `).then(result => result.rows || [])
 
-                updateGroup(currentGroups, input.groups, 'Admin', id, client)
-                updateGroup(currentGroups, input.groups, 'Usher', id, client)
+                updateGroup(currentGroups, input.security_groups, 'Admin', id, client)
+                updateGroup(currentGroups, input.security_groups, 'Usher', id, client)
                 // END TODO
 
                 result = await client.query(`
@@ -78,12 +78,12 @@ const updateGroup = (currentGroups: {id: string, name: string}[], newGroups: str
     if(currentGroup && !existInNewGroup) {
         client.query(`
             SELECT *
-            FROM ${STORED_PROC.deleteUserGroup}(${currentGroup.id}, ${user_id})
+            FROM ${STORED_PROC.deleteMemberGroup}(${currentGroup.id}, ${user_id})
         `)
     } else if (!currentGroup && existInNewGroup) {
         client.query(`
             SELECT *
-            FROM ${STORED_PROC.insertUserGroup}('${groupName}', ${user_id})
+            FROM ${STORED_PROC.insertMemberGroup}('${groupName}', ${user_id})
         `)
     }
 }
