@@ -15,7 +15,7 @@ export interface maintainMembersDetailFragment_member_type {
   name: string;
 }
 
-export interface maintainMembersDetailFragment_groups {
+export interface maintainMembersDetailFragment_security_groups {
   __typename: "Group";
   id: string;
   name: string | null;
@@ -35,5 +35,5 @@ export interface maintainMembersDetailFragment {
   member_type: maintainMembersDetailFragment_member_type | null;
   inactive: boolean | null;
   notes: string | null;
-  groups: (maintainMembersDetailFragment_groups | null)[] | null;
+  security_groups: (maintainMembersDetailFragment_security_groups | null)[];
 }

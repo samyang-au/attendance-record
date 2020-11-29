@@ -40,8 +40,8 @@ export const tokenVar = (token?: string) => {
     return privateToken
 }
 
-let privateUserId: string = ''
-export const userIdVar = (userId?: string) => {
+let privateUserId: string | undefined | null = ''
+export const userIdVar = (userId?: string | null) => {
     if(userId !== undefined) {
         privateUserId = userId
     }

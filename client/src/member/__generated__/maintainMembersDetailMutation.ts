@@ -15,7 +15,7 @@ export interface maintainMembersDetailMutation_updateMember_member_type {
   name: string;
 }
 
-export interface maintainMembersDetailMutation_updateMember_groups {
+export interface maintainMembersDetailMutation_updateMember_security_groups {
   __typename: "Group";
   id: string;
   name: string | null;
@@ -35,7 +35,7 @@ export interface maintainMembersDetailMutation_updateMember {
   member_type: maintainMembersDetailMutation_updateMember_member_type | null;
   inactive: boolean | null;
   notes: string | null;
-  groups: (maintainMembersDetailMutation_updateMember_groups | null)[] | null;
+  security_groups: (maintainMembersDetailMutation_updateMember_security_groups | null)[];
 }
 
 export interface maintainMembersDetailMutation {

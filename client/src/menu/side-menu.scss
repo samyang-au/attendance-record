@@ -41,15 +41,22 @@ $menu-width: 250px;
         min-height: 200px;
         z-index: 99;
 
-        & > a, & > div {
+        a, div {
             display: block;
             color: black;
             text-decoration: none;
+        }
+
+        & > a, & > div {
             padding: 0 20px 15px 20px;
         }
 
         & > a:first-of-type {
             margin-top: 20px;
+        }
+
+        .submenu {
+            margin: 20px 0 0 20px;
         }
     }
 

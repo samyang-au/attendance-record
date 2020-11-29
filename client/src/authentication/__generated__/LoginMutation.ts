@@ -9,7 +9,7 @@
 
 export interface LoginMutation_login {
   __typename: "Login";
-  id: string;
+  id: string | null;
   token: string | null;
   password_reset_required: boolean | null;
 }

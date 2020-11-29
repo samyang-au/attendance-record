@@ -15,7 +15,7 @@ export interface maintainMembersDetailQuery_member_member_type {
   name: string;
 }
 
-export interface maintainMembersDetailQuery_member_groups {
+export interface maintainMembersDetailQuery_member_security_groups {
   __typename: "Group";
   id: string;
   name: string | null;
@@ -35,7 +35,7 @@ export interface maintainMembersDetailQuery_member {
   member_type: maintainMembersDetailQuery_member_member_type | null;
   inactive: boolean | null;
   notes: string | null;
-  groups: (maintainMembersDetailQuery_member_groups | null)[] | null;
+  security_groups: (maintainMembersDetailQuery_member_security_groups | null)[];
 }
 
 export interface maintainMembersDetailQuery_memberTypes {

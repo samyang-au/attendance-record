@@ -1,4 +1,5 @@
 {
+    "access-denied": "Access Denied",
     "gender:female": "Female",
     "gender:male": "Male",
     "groups:admin": "Admin",
@@ -30,6 +31,10 @@
     "menu:logout": "Logout",
     "menu:main": "Main",
     "menu:maintain-members": "Maintain Members",
+    "menu:service-records-submenu:afternoon-service": "Afternoon Service",
+    "menu:service-records-submenu:morning-service": "Morning Service",
+    "menu:service-records-submenu:night-service": "Night Service",
+    "menu:service-records": "Service Records",
     "menu:update-password": "Update Password",
     "password:confirm-password": "Please reconfirm password",
     "password:error:confirm-match": "confirm password match",

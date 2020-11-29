@@ -24,7 +24,7 @@ export interface MemberInput {
   member_type: string;
   inactive: boolean;
   notes: string;
-  groups: string[];
+  security_groups: string[];
 }
 
 //==============================================================

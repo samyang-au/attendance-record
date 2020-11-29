@@ -6,9 +6,10 @@ import { Link, useHistory } from 'react-router-dom'
 import { Language } from 'translations/language'
 import { T } from 'translations/translate'
 import { CORE_GROUP } from 'common/core-groups'
+import { ExpandStateEnum } from 'global/types'
+import { ServiceRecordSubmenu } from './service-record-submenu'
 
 import './side-menu.scss'
-import { ExpandStateEnum } from 'global/types'
 
 export const SideMenu = () => {
     const client = useApolloClient()
@@ -40,6 +41,12 @@ export const SideMenu = () => {
                 <Link to={ROUTE_MAIN} onClick={onCollapse}><T k="menu:main" /></Link>
                 <Link to={ROUTE_UPDATE_PASSWORD} onClick={onCollapse}><T k="menu:update-password" /></Link>
                 {userGroups.find(group => group === CORE_GROUP.Admin) && <Link to={ROUTE_MAINTAIN_MEMBERS} onClick={onCollapse}><T k="menu:maintain-members" /></Link>}
+                {userGroups.find(group => group === CORE_GROUP.Usher) &&
+                    <div>
+                        <T k="menu:service-records" />
+                        <ServiceRecordSubmenu onClick={onCollapse} />
+                    </div>
+                }
                 <Language />
                 <T k="menu:logout" onClick={onLogout} />
             </div>

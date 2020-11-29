@@ -26,7 +26,7 @@ const MAINTAIN_MEMBERS_DETAIL_FRAGMENT = gql`
         }
         inactive
         notes
-        groups {
+        security_groups {
             id
             name
         }
@@ -91,16 +91,16 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
             member_type: data?.member?.member_type?.id || '',
             inactive: data?.member?.inactive || false,
             notes: data?.member?.notes || '',
-            groups: [],
+            security_groups: [],
         }
 
         setMemberDetail(memberInput)
-        if (data?.member?.groups?.find(group => group?.name === CORE_GROUP.Admin)) {
+        if (data?.member?.security_groups?.find(group => group?.name === CORE_GROUP.Admin)) {
             setAdminGroup(true)
         } else {
             setAdminGroup(false)
         }
-        if (data?.member?.groups?.find(group => group?.name === CORE_GROUP.Usher)) {
+        if (data?.member?.security_groups?.find(group => group?.name === CORE_GROUP.Usher)) {
             setUsherGroup(true)
         } else {
             setUsherGroup(false)
@@ -205,19 +205,19 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
     }
 
     const onSave = () => {
-        const groups = []
+        const security_groups = []
         if (adminGroup) {
-            groups.push(CORE_GROUP.Admin)
+            security_groups.push(CORE_GROUP.Admin)
         }
         if (usherGroup) {
-            groups.push(CORE_GROUP.Usher)
+            security_groups.push(CORE_GROUP.Usher)
         }
         updateMember({
             variables: {
                 id,
                 input: {
                     ...memberDetail!,
-                    groups
+                    security_groups
                 }
             }
         })
@@ -271,12 +271,12 @@ export const MaintainMembersDetail = ({ id }: { id: string }) => {
                 <textarea className="notes-input" value={memberDetail?.notes || ''} onChange={onNotesChange} />
                 <T className="notes-label" k="member-detail:groups" />
                 <div className="groups-container">
-                    <input type="checkbox" id="admin-group" name="admin-group" checked={adminGroup} onChange={onAdminGroupChange} />
-                    <label htmlFor="admin-group">
+                    <input type="checkbox" id={`admin-group-${data?.member?.id}`} name={`admin-group-${data?.member?.id}`} checked={adminGroup} onChange={onAdminGroupChange} />
+                    <label htmlFor={`admin-group-${data?.member?.id}`}>
                         <T k="groups:admin" />
                     </label>
-                    <input type="checkbox" id="usher-group" name="usher-group" checked={usherGroup} onChange={onUsherGroupChange} />
-                    <label htmlFor="usher-group">
+                    <input type="checkbox" id={`usher-group-${data?.member?.id}`} name={`usher-group-${data?.member?.id}`} checked={usherGroup} onChange={onUsherGroupChange} />
+                    <label htmlFor={`usher-group-${data?.member?.id}`}>
                         <T k="groups:usher" />
                     </label>
                 </div>
