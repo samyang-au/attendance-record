@@ -27,7 +27,7 @@ export const MaintainMembers = () => {
         return <div className="loader" />
     }
 
-    if (userGroups.find(group => group === CORE_GROUP.Admin)) {
+    if (!userGroups.find(group => group === CORE_GROUP.Admin)) {
         return <AccessDenied />
     }
 
