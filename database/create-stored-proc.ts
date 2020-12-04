@@ -368,4 +368,52 @@ export async function createStoredProc(dbClient: Client) {
             WHERE gm.group_id = "_group_id";
         `
     )
+
+    await createProc(
+        'getServiceRecord',
+        `
+            IN "_key" text
+        `,
+        `
+            TABLE(
+                id smallint,
+                key text,
+                date date,
+                startTime varchar,
+                endTime varchar,
+                usher1 smallint,
+                usher2 smallint,
+                topic text,
+                hymn text,
+                sermon_speaker smallint,
+                interpreter smallint,
+                hymnalLeader smallint,
+                note text
+            )
+        `,
+        `
+            IF NOT EXISTS (SELECT FROM "${SCHEMA}"."service_record" sr WHERE sr."key" = "_key") THEN
+                INSERT INTO "${SCHEMA}"."service_record" (key, date)
+                VALUES ("_key", NOW());
+            END IF;
+
+            RETURN QUERY
+            SELECT
+                sr.id,
+                sr.key,
+                sr.date,
+                sr.startTime,
+                sr.endTime,
+                sr.usher1,
+                sr.usher2,
+                sr.topic,
+                sr.hymn,
+                sr.sermon_speaker,
+                sr.interpreter,
+                sr.hymnalLeader,
+                sr.note
+            FROM "${SCHEMA}"."service_record" sr
+            WHERE sr."key" = "_key";
+        `
+    )
 }
