@@ -34,14 +34,19 @@ export const app = () => {
     const expressApp = express()
     apollo.applyMiddleware({ app: expressApp })
 
-    const server = process.env.env === "prod" ?
-        https.createServer({
+    let server: https.Server | http.Server
+
+    if(process.env.env === "prod") {
+        server = https.createServer({
             key: fs.readFileSync('./privkey.pem', 'utf8'),
             cert: fs.readFileSync('./cert.pem', 'utf8'),
         }, expressApp)
-        : http.createServer(expressApp)
-
-    server.listen({ port: process.env.env === "prod" ? 443 : 80 })
+        server.listen({ port: 443 })
+    } else {
+        server = http.createServer(expressApp)
+        server.listen({ port: 80 })
+        console.log('graph started on http://localhost/graphql')
+    }
 
     process.on('SIGTERM', () => {
         console.log('SIGTERM signal received: closing HTTP server')
