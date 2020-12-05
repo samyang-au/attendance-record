@@ -3,6 +3,7 @@ import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './schema'
 import { resolvers } from './resolver'
 import https from 'https'
+import http from 'http'
 import fs from 'fs'
 import path from 'path'
 import { Pool } from 'pg'
@@ -33,13 +34,14 @@ export const app = () => {
     const expressApp = express()
     apollo.applyMiddleware({ app: expressApp })
 
-    const server = https.createServer({
-        key: process.env.env === "prod" ? fs.readFileSync('./privkey.pem', 'utf8') : fs.readFileSync('./server.key'),
-        cert: process.env.env === "prod" ? fs.readFileSync('./cert.pem', 'utf8') : fs.readFileSync('./server.crt'),
-    }, expressApp)
+    const server = process.env.env === "prod" ?
+        https.createServer({
+            key: fs.readFileSync('./privkey.pem', 'utf8'),
+            cert: fs.readFileSync('./cert.pem', 'utf8'),
+        }, expressApp)
+        : http.createServer(expressApp)
 
-    server.listen({ port: 443 })
-    console.log('listening to port 443')
+    server.listen({ port: process.env.env === "prod" ? 443 : 80 })
 
     process.on('SIGTERM', () => {
         console.log('SIGTERM signal received: closing HTTP server')
